@@ -133,7 +133,7 @@ export default function ContactPage() {
 
               {status === "success" && (
                 <p className="text-green-600 font-medium mt-2">
-                  ✅ Message sent successfully!
+                  ✅ Message sent successfully! <br/> We will get back to you soon.
                 </p>
               )}
               {status === "error" && (
