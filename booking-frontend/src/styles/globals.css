@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.carousel .control-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 6px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    
+  }
+  
+ 
+
+
