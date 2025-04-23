@@ -67,7 +67,7 @@ public class EmailService {
                     "<h3>Hi " + name + ",</h3>" +
                             "<p>Thank you for booking a <strong>" + type + "</strong>.</p>" +
                             "<p>Your appointment is confirmed for <strong>" + dateTime + "</strong>.</p>" +
-                            "<p>We're excited to serve you!</p>" +
+                            "<p>We're excited to serve you relax!</p>" +
                             "<br/><p><em>Passion2Code Team</em></p>",
                     true
             );
