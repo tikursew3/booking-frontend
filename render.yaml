@@ -2,8 +2,20 @@ services:
   - type: web
     name: booking-backend
     env: java
-    buildCommand: ./mvnw clean install -DskipTests
+    plan: free
+    buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -jar target/*.jar
+    rootDir: booking-backend
     envVars:
       - key: JAVA_VERSION
         value: 17
+      - key: DB_URL
+        value: jdbc:postgresql://dpg-d04kdladbo4c73emom80-a.oregon-postgres.render.com:5432/photography_booking
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: LSCJW7eY9rQYNOcvBbxE4MsZfreZYybt
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: FRONTEND_BASE_URL
+        value: https://booking-frontend-rust.vercel.app
