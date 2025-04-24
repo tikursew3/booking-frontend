@@ -268,7 +268,7 @@ public class EmailService {
             </p>
             <p>If the button doesn't work, copy and paste the link below in your browser:</p>
             <p><a href="%s">%s</a></p>
-            <p>Thanks,<br/>Passion2Code Booking Team</p>
+            <p>Thank You,<br/>Passion2Code Booking Team</p>
         """.formatted(name, formattedDateTime, payLaterUrl, payLaterUrl, payLaterUrl);
     }
 
