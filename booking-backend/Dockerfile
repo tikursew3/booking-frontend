@@ -14,7 +14,10 @@ WORKDIR /app
 
 # UPDATED Copy from project root (not target/)
 # Copy the Spring Boot JAR file from target to the container
-COPY booking-0.0.1-SNAPSHOT.jar app.jar
+#COPY booking-0.0.1-SNAPSHOT.jar app.jar
+
+# Copy the packaged Spring Boot JAR file
+COPY target/booking-0.0.1-SNAPSHOT.jar app.jar
 
 # Change ownership
 # Change file ownership to the non-root user
