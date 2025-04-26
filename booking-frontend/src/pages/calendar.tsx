@@ -5,7 +5,8 @@ import { startOfWeek } from "date-fns/startOfWeek";
 import { getDay } from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import api from "@/lib/axios";
 import { enUS } from "date-fns/locale/en-US";
 import { BookingCalendarEventDTO } from "@/types/types";
 import { CalendarEvent } from "@/types/types";
@@ -37,7 +38,7 @@ export default function BookingCalendarPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/bookings/calendar");
+        const res = await api.get("api/bookings/calendar");  
         const data = res.data.map((event: BookingCalendarEventDTO) => ({
             title: event.title,
             start: new Date(event.start),

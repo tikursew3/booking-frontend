@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
-import axios from "@/lib/axios";
+import api from "@/lib/axios";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 
 export default function ContactPage() {
@@ -27,7 +27,7 @@ export default function ContactPage() {
     setStatus(null);
 
     try {
-      await axios.post("/contact", formData);
+      await api.post("api/contact", formData);
       setStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (err) {

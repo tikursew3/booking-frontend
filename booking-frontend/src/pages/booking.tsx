@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useServices } from "@/hooks/useServices";
-import api from "../lib/axios";
+import api from "@/lib/axios";
 import axios from "axios";
 import { BookingCalendarEventDTO } from "@/types/types";
 
@@ -37,7 +37,7 @@ export default function Booking() {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const res = await api.get("/bookings/calendar"); // or your booking API
+        const res = await api.get("api/bookings/calendar"); // or your booking API
         const events = res.data;
   
         const blocked = events
@@ -132,7 +132,7 @@ export default function Booking() {
         const bookingId = bookingRes.data.id;
         const depositAmount = bookingRes.data.depositAmount || 50;
   
-        const stripeRes = await api.post("/stripe/create-checkout-session", null, {
+        const stripeRes = await api.post("api/stripe/create-checkout-session", null, {
           params: { bookingId, amount: depositAmount },
         });
   
