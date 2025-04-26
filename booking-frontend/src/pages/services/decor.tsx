@@ -139,7 +139,7 @@ export default function DecorPage() {
       </section>
 
 
-      {/* Services Section (unchanged for now) */}
+      {/* Services Section */}
       <section id="services" className="py-16 px-6 bg-gray-50 scroll-mt-32">
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Decor Services
