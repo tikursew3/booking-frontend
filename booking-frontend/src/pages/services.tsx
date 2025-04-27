@@ -56,7 +56,7 @@ export default function ServicesPage() {
 
         <div className="text-center mt-10">
           <Link href="/photography">
-            <button className="text-purple-700 hover:underline font-medium text-lg">View All Photography Services</button>
+            <button className="bg-black-600 text-purple-700 hover:underline font-medium text-lg">View All Photography Services</button>
           </Link>
         </div>
       </section>
