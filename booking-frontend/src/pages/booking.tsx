@@ -123,7 +123,7 @@ export default function Booking() {
         startDateTime: formatLocalDateTimeForBackend(selectedStart),
       };
   
-      const bookingRes = await api.post("/bookings", payload);
+      const bookingRes = await api.post("/api/bookings", payload);
   
       if (bookingType === "CONSULTATION") {
         setMessage("✅ Consultation booked successfully!");
