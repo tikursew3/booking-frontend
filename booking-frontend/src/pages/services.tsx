@@ -17,11 +17,19 @@ export default function ServicesPage() {
         </p>
 
         <div className="mt-8 flex flex-col md:flex-row justify-center gap-6">
-          <Link  href="/photography">
+          <Link href="/photography">
             <button className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-xl transition text-lg">
               📸 Photography Services
             </button>
           </Link>
+
+          <div className="text-center mt-10">
+          <Link href="/photography">
+            <button className="bg-purple-700 hover:underline font-medium text-white text-lg">View All Photography Services</button>
+          </Link>
+        </div>
+
+
           <Link  href="/decor">
             <button className="bg-pink-600 hover:bg-pink-700 text-white py-3 px-6 rounded-xl transition text-lg">
               🎀 Decor Services
