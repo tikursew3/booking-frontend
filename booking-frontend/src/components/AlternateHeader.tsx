@@ -59,7 +59,7 @@ export default function AlternateHeader() {
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={`transition ${
-                    pathname === link.href ? 'text-[#070f21] hover:text-[#f5498b]' : 'text-[#070f21] hover:text-[#f5498b]'
+                    pathname === link.href ? 'text-[#070808] hover:text-[#f5498b]' : 'text-[#98f5f5] hover:text-[#f5498b]'
                   }`}
                 >
                   {link.name}
