@@ -1,7 +1,7 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/AdminLayout";
-import axios from "axios";
+import api from "@/lib/axios";
 
 import {
   //useDecorItems,
@@ -36,7 +36,7 @@ export default function DecorAdminPage() {
     const { name, value, type } = e.target;
   
     if (type === "checkbox") {
-      const checked = (e.target as HTMLInputElement).checked; // ✅ Narrow to HTMLInputElement
+      const checked = (e.target as HTMLInputElement).checked; // Narrow to HTMLInputElement
       setFormData((prev) => ({
         ...prev,
         [name]: checked,
@@ -84,7 +84,7 @@ export default function DecorAdminPage() {
 
   const handleToggle = async (item: DecorItem) => {
     try {
-      await axios.patch(`http://localhost:8080/api/decor-items/${item.id}/toggle-active`, {
+      await api.patch(`/api/decor-items/${item.id}/toggle-active`, {
         active: !item.active,
       });
       // Refetch items

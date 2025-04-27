@@ -1,11 +1,15 @@
+import Dashboard from "./dashboard";
+import AdminLayout from "@/components/AdminLayout";
 
 
 
 export default function Home() {
   return (
-    <div>
+    <AdminLayout>
+    
      
-     
-    </div>
+     <Dashboard/>
+    
+    </AdminLayout>
   );
 }

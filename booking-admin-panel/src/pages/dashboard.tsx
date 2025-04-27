@@ -1,6 +1,6 @@
 import AdminLayout from "@/components/AdminLayout";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/lib/axios";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { DashboardSummary } from "@/types/types";
 import { ServiceBookingData } from "@/types/types";
@@ -40,15 +40,15 @@ export default function Dashboard() {
  
 
   useEffect(() => {
-    axios
-      .get<BookingCalendarEventDTO[]>("http://localhost:8080/api/bookings/calendar")
+    api
+      .get<BookingCalendarEventDTO[]>("/api/bookings/calendar")
       .then((res) => setCalendarEvents(res.data))
       .catch((err) => console.error("Failed to load calendar data", err));
   }, []);
 
   useEffect(() => {
-    axios
-      .get<DashboardSummary>("http://localhost:8080/api/bookings/admin/dashboard-summary")
+    api
+      .get<DashboardSummary>("/api/bookings/admin/dashboard-summary")
       .then((res) => {
         setSummary(res.data);
         setLoading(false);
@@ -60,8 +60,8 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get<ServiceBookingData[]>("http://localhost:8080/api/bookings/admin/bookings-by-service")
+    api
+      .get<ServiceBookingData[]>("/api/bookings/admin/bookings-by-service")
       .then((res) => setServiceData(res.data))
       .catch((err) => console.error("Failed to load service booking chart data", err));
   }, []);

@@ -5,7 +5,7 @@ import { enUS } from "date-fns/locale/en-US";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/lib/axios";
 import AdminLayout from "@/components/AdminLayout";
 import { BookingCalendarEventDTO } from "@/types/types"; 
 
@@ -33,8 +33,8 @@ export default function AdminCalendarPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get<BookingCalendarEventDTO[]>(
-          "http://localhost:8080/api/bookings/calendar"
+        const res = await api.get<BookingCalendarEventDTO[]>(
+          "/api/bookings/calendar"
         );
   
         const transformed = res.data.map((event) => ({

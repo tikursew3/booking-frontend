@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/lib/axios";
 import AdminLayout from "@/components/AdminLayout";
 
 import { Booking } from "@/types/types"; 
@@ -16,7 +16,7 @@ export default function BookingsPage() {
     if (!confirmed) return;
   
     try {
-      await axios.patch(`http://localhost:8080/api/bookings/${bookingId}/cancel`);
+      await api.patch(`/api/bookings/${bookingId}/cancel`);
   
       // 🧼 Update status to 'CANCELLED', let filter logic hide it
       setBookings(prev =>
@@ -34,8 +34,8 @@ export default function BookingsPage() {
   
 
   useEffect(() => {
-    axios
-      .get<Booking[]>("http://localhost:8080/api/bookings")
+    api
+      .get<Booking[]>("/api/bookings")
       .then(res => {
         const enriched = res.data.map((b) => ({
           ...b,
@@ -170,7 +170,7 @@ export default function BookingsPage() {
               location: editingBooking.location,
               notes: editingBooking.notes,
             };
-            await axios.put(`http://localhost:8080/api/bookings/${editingBooking.id}`, updated);
+            await api.put(`/api/bookings/${editingBooking.id}`, updated);
             setBookings(prev =>
               prev.map(b => (b.id === editingBooking.id ? { ...b, ...updated } : b))
             );

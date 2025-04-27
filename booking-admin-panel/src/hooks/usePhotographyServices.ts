@@ -6,7 +6,7 @@ export const useTogglePhotographyService = () => {
 
   return useMutation({
     mutationFn: ({ id, active }: { id: number; active: boolean }) =>
-      Promise.resolve(api.patch(`/services/${id}/active`, { active })),
+      Promise.resolve(api.patch(`/api/services/${id}/active`, { active })),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["services"] });

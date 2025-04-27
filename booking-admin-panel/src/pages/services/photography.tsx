@@ -3,7 +3,7 @@ import ServiceForm from "@/components/ServiceForm";
 import { useServices } from "@/hooks/useServices";
 import { PhotographyService } from "@/types/types";
 import { useState } from "react";
-import axios from "axios";
+import api from "@/lib/axios";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function PhotographyServicesPage() {
@@ -25,9 +25,9 @@ export default function PhotographyServicesPage() {
   const handleFormSubmit = async (formData: Omit<PhotographyService, "id">) => {
     try {
       if (selectedService) {
-        await axios.put(`http://localhost:8080/api/photography-services/${selectedService.id}`, formData);
+        await api.put(`/api/photography-services/${selectedService.id}`, formData);
       } else {
-        await axios.post("http://localhost:8080/api/photography-services", formData);
+        await api.post("/api/photography-services", formData);
       }
       setIsFormOpen(false);
       await queryClient.invalidateQueries({ queryKey: ["photography-services"] });
@@ -39,7 +39,7 @@ export default function PhotographyServicesPage() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this service?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/photography-services/${id}`);
+        await api.delete(`/api/photography-services/${id}`);
         await queryClient.invalidateQueries({ queryKey: ["photography-services"] });
       } catch (err) {
         console.error("Delete failed", err);
@@ -49,7 +49,7 @@ export default function PhotographyServicesPage() {
 
   const toggleServiceStatus = async (id: number, currentStatus: boolean) => {
     try {
-      await axios.patch(`http://localhost:8080/api/photography-services/${id}/toggle-active`, {
+      await api.patch(`/api/photography-services/${id}/toggle-active`, {
         active: !currentStatus,
       });
       await queryClient.invalidateQueries({ queryKey: ["photography-services"] });

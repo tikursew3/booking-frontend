@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // adjust if needed
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Your backend base URL
 });
 
 export default api;

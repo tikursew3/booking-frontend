@@ -7,7 +7,7 @@ export const useAllDecorItems = () => {
   return useQuery({
     queryKey: ["decor-items-all"],
     queryFn: async () => {
-      const res = await api.get<DecorItem[]>("/decor-items");
+      const res = await api.get<DecorItem[]>("/api/decor-items");
       return res.data;
     },
   });
@@ -18,7 +18,7 @@ export const useDecorItems = () => {
   return useQuery({
     queryKey: ["decor-items"],
     queryFn: async () => {
-      const res = await api.get<DecorItem[]>("/decor-items");
+      const res = await api.get<DecorItem[]>("/api/decor-items");
       return res.data.filter((item) => item.active);
     },
   });
@@ -28,7 +28,7 @@ export const useAddDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Omit<DecorItem, "id">) => {
-      const response = await api.post("/decor-items", data);
+      const response = await api.post("/api/decor-items", data);
       return response.data;
     },
     onSuccess: () => {
@@ -42,7 +42,7 @@ export const useUpdateDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: DecorItem) => {
-      const response = await api.put(`/decor-items/${data.id}`, data);
+      const response = await api.put(`/api/decor-items/${data.id}`, data);
       return response.data;
     },
     onSuccess: () => {
@@ -56,7 +56,7 @@ export const useDeleteDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const response = await api.delete(`/decor-items/${id}`);
+      const response = await api.delete(`/api/decor-items/${id}`);
       return response.data;
     },
     onSuccess: () => {
