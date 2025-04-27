@@ -132,7 +132,7 @@ export default function Booking() {
         const bookingId = bookingRes.data.id;
         const depositAmount = bookingRes.data.depositAmount || 50;
   
-        const stripeRes = await api.post("api/stripe/create-checkout-session", null, {
+        const stripeRes = await api.post("/api/stripe/create-checkout-session", null, {
           params: { bookingId, amount: depositAmount },
         });
   
