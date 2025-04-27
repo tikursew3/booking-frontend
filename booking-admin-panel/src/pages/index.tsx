@@ -1,6 +1,7 @@
 import AdminLayout from "@/components/AdminLayout";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
+import { useRouter } from "next/router";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { DashboardSummary } from "@/types/types";
 import { ServiceBookingData } from "@/types/types";
@@ -27,6 +28,7 @@ const localizer = dateFnsLocalizer({
 
 
 export default function Dashboard() {
+  const router = useRouter();
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [serviceData, setServiceData] = useState<ServiceBookingData[]>([]);
@@ -38,6 +40,14 @@ export default function Dashboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarKey, setCalendarKey] = useState(0);
  
+
+  // this useEffect is to protect the page
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+      router.push("/admin/login"); // Redirect to login if no token
+    }
+  }, [router]);
 
   useEffect(() => {
     api
