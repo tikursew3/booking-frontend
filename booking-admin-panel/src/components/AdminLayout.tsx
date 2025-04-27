@@ -12,7 +12,7 @@ export default function AdminLayout({ children }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
-    { name: "🏠 Dashboard", href: "/dashboard" },
+    { name: "🏠 Dashboard", href: "/index" },
     { name: "📸 Photography Services", href: "/services/photography" },
     { name: "🎀 Decor Items", href: "/services/decor" },
     { name: "📅 Calendar", href: "/calendar" },
