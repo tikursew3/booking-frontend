@@ -1,12 +1,13 @@
 import axios from "axios";
-import { toast } from "react-hot-toast";
-import Router from "next/router"; // Important: use Next.js router manually
+//import { toast } from "react-hot-toast";
+//import Router from "next/router"; // Important: use Next.js router manually
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Your backend base URL
   withCredentials: false, // Send cookies automatically
 });
 
+/*
 
 // Request Interceptor Automatically attach Authorization token if available
 api.interceptors.request.use(
@@ -49,7 +50,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
+*/
 
 
 export default api;

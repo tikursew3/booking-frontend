@@ -1,3 +1,5 @@
+
+/*
 import api from "@/lib/axios";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
@@ -28,3 +30,4 @@ export default function LogoutButton() {
     </button>
   );
 }
+*/

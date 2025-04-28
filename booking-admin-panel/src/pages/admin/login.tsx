@@ -1,5 +1,6 @@
 // pages/admin/login.tsx
 
+/*
 import { useState } from "react";
 import { useRouter } from "next/router";
 import api from "@/lib/axios";
@@ -65,3 +66,4 @@ export default function AdminLoginPage() {
     </div>
   );
 }
+*/

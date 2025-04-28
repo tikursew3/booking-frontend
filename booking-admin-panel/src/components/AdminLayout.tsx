@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 import { Menu, X } from "lucide-react";
-import LogoutButton from "@/pages/admin/LogoutButton";
+//import LogoutButton from "@/pages/admin/LogoutButton";
 
 type Props = {
   children: ReactNode;
@@ -54,9 +54,7 @@ export default function AdminLayout({ children }: Props) {
             ))}
           </ul>
         </nav>
-        <div className="px-4 pb-6">
-            <LogoutButton />
-          </div>
+       
       </aside>
 
       {/* Main content */}
