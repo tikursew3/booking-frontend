@@ -58,7 +58,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     api
-      .get<DashboardSummary>("/api/bookings/admin/dashboard-summary")
+      .get<DashboardSummary>("/api/bookings/dashboard-summary")
       .then((res) => {
         setSummary(res.data);
         setLoading(false);
@@ -71,7 +71,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     api
-      .get<ServiceBookingData[]>("/api/bookings/admin/bookings-by-service")
+      .get<ServiceBookingData[]>("/api/bookings/bookings-by-service")
       .then((res) => setServiceData(res.data))
       .catch((err) => console.error("Failed to load service booking chart data", err));
   }, []);
