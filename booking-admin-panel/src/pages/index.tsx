@@ -50,7 +50,7 @@ export default function Dashboard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get("/api/bookings/dashboard-summary", { withCredentials: true });
+        await api.get('/api/admin-auth-check', { withCredentials: true });
         setAuthChecked(true);
       } catch {
         router.push("/admin/login");
@@ -58,7 +58,7 @@ export default function Dashboard() {
     };
 
     checkAuth();
-  }, [router]);
+  }, []);
 
   
 

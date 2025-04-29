@@ -25,3 +25,13 @@ export const adminLogin = async (email: string, password: string) => {
       }
   );
 };
+
+
+/**
+ * Logs out the admin by clearing the session cookie.
+ */
+export const adminLogout = async () => {
+  return api.post('/api/admin-logout', null, {
+    withCredentials: true,
+  });
+};

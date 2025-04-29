@@ -1,7 +1,7 @@
 // src/pages/admin/login.tsx
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { adminLogin } from '../api/adminAuth'; // Adjust the import path as needed
+import { adminLogin } from '@/pages/api/adminAuth'; // Adjust the import path as needed
 
 export default function AdminLogin() {
   const router = useRouter();

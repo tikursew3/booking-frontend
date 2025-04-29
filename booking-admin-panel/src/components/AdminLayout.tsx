@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { adminLogout } from "@/pages/api/adminAuth"; // Adjust the import path as needed
 //import LogoutButton from "@/pages/admin/LogoutButton";
 
 type Props = {
@@ -18,7 +19,13 @@ export default function AdminLayout({ children }: Props) {
     { name: "🎀 Decor Items", href: "/services/decor" },
     { name: "📅 Calendar", href: "/calendar" },
     { name: "📖 Bookings", href: "/bookings" },
+
+   
   ];
+  const handleLogout = async () => {
+    await adminLogout();
+    router.push("/admin/login");
+  };
 
   return (
     <div className="bg-white text-black min-h-screen p-8">
@@ -53,6 +60,16 @@ export default function AdminLayout({ children }: Props) {
               </li>
             ))}
           </ul>
+            {/* ✅ Logout button */}
+          <div className="px-4 mt-4">
+              <button
+                onClick={handleLogout}
+                className="w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
+              >
+                🚪 Logout
+              </button>
+            </div>
+
         </nav>
        
       </aside>
