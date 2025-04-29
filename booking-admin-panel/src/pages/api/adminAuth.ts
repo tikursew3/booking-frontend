@@ -10,17 +10,18 @@ import api from '@/lib/axios';
  * @returns Axios response promise
  */
 export const adminLogin = async (email: string, password: string) => {
-  const params = new URLSearchParams();
-  params.append('username', email);
-  params.append('password', password);
 
   return api.post(
-    '/login',
-    params,
+    '/api/damin-login',
     {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        email,
+        password
       },
-    }
+      {
+        withCredentials: true, // Important for session cookies
+        headers: {
+          'Content-Type': 'application/json', // Send JSON now (not form-urlencoded)
+        },
+      }
   );
 };
