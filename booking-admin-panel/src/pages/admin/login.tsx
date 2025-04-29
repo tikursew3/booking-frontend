@@ -15,7 +15,7 @@ export default function AdminLogin() {
 
     try {
       await adminLogin(email, password);
-      router.push('/index'); //  Redirect to admin dashboard after login (adjust as needed)
+      router.push('/'); //  Redirect to admin dashboard after login (adjust as needed)
     } catch {
       setError('Login failed. Please check your email and password.');
     }
