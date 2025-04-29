@@ -43,7 +43,17 @@ export default function Dashboard() {
 
   // this useEffect is to protect the page
   useEffect(() => {
-    router.push('/admin/login');
+    const checkAuth = async () => {
+      try {
+        await api.get('/api/bookings/dashboard-summary', { withCredentials: true, });
+        // ✅ User is authenticated — do nothing
+      } catch {
+        //  Not authenticated — redirect to login
+        router.push('/admin/login');
+      }
+    };
+
+    checkAuth();
   }, [router]);
 
 
