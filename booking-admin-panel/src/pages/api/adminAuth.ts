@@ -3,7 +3,7 @@ import api from '@/lib/axios';
 
 /**
  * Logs in the admin using session-based authentication.
- * Backend must use Spring Security with formLogin()
+ * Backend must use Spring Security with formLogin().
  * 
  * @param email Admin email
  * @param password Admin password
