@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   // this useEffect is to protect the page
   useEffect(() => {
-    router.push('/login');
+    router.push('/adminAuth');
   }, [router]);
 
 
