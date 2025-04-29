@@ -12,7 +12,7 @@ import api from '@/lib/axios';
 export const adminLogin = async (email: string, password: string) => {
 
   return api.post(
-    '/api/damin-login',
+    '/api/admin-login',
     {
         email,
         password
