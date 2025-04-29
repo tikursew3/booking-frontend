@@ -1,7 +1,7 @@
 import AdminLayout from "@/components/AdminLayout";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { DashboardSummary } from "@/types/types";
 import { ServiceBookingData } from "@/types/types";
@@ -28,7 +28,8 @@ const localizer = dateFnsLocalizer({
 
 
 export default function Dashboard() {
-  //const router = useRouter();
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [serviceData, setServiceData] = useState<ServiceBookingData[]>([]);
@@ -42,9 +43,18 @@ export default function Dashboard() {
  
 
   // this useEffect is to protect the page
- // useEffect(() => {
-   // router.push('/admin/login');
- // }, [router]);
+ useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      await api.get("/api/bookings/dashboard-summary", { withCredentials: true });
+      setAuthChecked(true);
+    } catch {
+      router.push("/admin/login");
+    }
+  };
+
+  checkAuth();
+}, [router]);
 
 
   useEffect(() => {
@@ -77,9 +87,13 @@ export default function Dashboard() {
   if (loading) return <div className="p-8">Loading...</div>;
   if (!summary) return <div className="p-8 text-red-500">Failed to load summary.</div>;
 
-  return (
-    <AdminLayout>
-      <main className="p-8">
+if (!authChecked) {
+  return <div className="p-8">Checking authentication...</div>;
+}
+
+return (
+  <AdminLayout>
+    <main className="p-8">
         <h1 className="text-3xl font-bold mb-8 text-center">📊 Dashboard Overview</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
