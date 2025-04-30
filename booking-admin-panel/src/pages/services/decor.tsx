@@ -191,7 +191,8 @@ export default function DecorAdminPage() {
         {error && <p className="text-red-500">Failed to load decor items.</p>}
 
         {decorItems && decorItems.length > 0 && (
-          <table className="w-full bg-white shadow-md rounded-xl overflow-hidden">
+          <table className="min-w-full table-auto border-collapse">
+            
             <thead className="bg-gray-100">
               <tr className="text-left">
                 <th className="p-4">Image</th>
