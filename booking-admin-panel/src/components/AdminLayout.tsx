@@ -24,15 +24,15 @@ export default function AdminLayout({ children }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-white text-black">
-      {/* Sticky top nav on mobile, vertical sidebar on desktop */}
-      <aside className="w-full md:w-64 bg-gray-900 text-white sticky top-0 z-50 md:relative md:top-auto">
-        <div className="px-4 py-4 md:py-6 md:text-center">
+    <div className="min-h-screen flex flex-row bg-white text-black">
+      {/* Sidebar always on the left */}
+      <aside className="w-64 bg-gray-900 text-white min-h-screen flex-shrink-0">
+        <div className="px-4 py-6 text-center border-b border-gray-700">
           <h2 className="text-xl font-bold">Admin Panel</h2>
         </div>
 
-        <nav>
-          <ul className="space-y-2 px-4 pb-4">
+        <nav className="flex flex-col justify-between h-full">
+          <ul className="space-y-2 px-4 pt-6">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
@@ -49,8 +49,7 @@ export default function AdminLayout({ children }: Props) {
             ))}
           </ul>
 
-          {/* Logout button */}
-          <div className="px-4 mt-4 pb-4">
+          <div className="px-4 mt-6 mb-4">
             <button
               onClick={handleLogout}
               className="w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
@@ -62,7 +61,7 @@ export default function AdminLayout({ children }: Props) {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 bg-gray-100 p-4">{children}</main>
+      <main className="flex-1 bg-gray-100 p-4 overflow-x-auto">{children}</main>
     </div>
   );
 }
