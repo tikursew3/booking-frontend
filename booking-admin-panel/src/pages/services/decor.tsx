@@ -2,6 +2,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/AdminLayout";
 import api from "@/lib/axios";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
 import {
   //useDecorItems,
@@ -46,6 +47,20 @@ export default function DecorAdminPage() {
         ...prev,
         [name]: name === "pricePerDay" ? parseFloat(value) : value,
       }));
+    }
+  };
+  
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    //  handle the Cloudinary upload
+    try {
+      const uploadedUrl = await uploadToCloudinary(file);
+      setFormData((prev) => ({ ...prev, imageUrl: uploadedUrl }));
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      alert("Image upload failed. Please try again.");
     }
   };
   
@@ -142,14 +157,18 @@ export default function DecorAdminPage() {
               required
             />
             <input
-              type="url"
+              type="file"
               name="imageUrl"
+              accept="image/*"
               placeholder="Image URL"
               value={formData.imageUrl}
-              onChange={handleInputChange}
+              onChange={handleImageChange}
               className="w-full border px-4 py-2 rounded"
               required
             />
+            {formData.imageUrl && (
+              <img src={formData.imageUrl} alt="Preview" className="w-24 mt-2 rounded" />
+            )}
             <input
               type="number"
               name="pricePerDay"
