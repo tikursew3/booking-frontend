@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { adminLogout } from "@/pages/api/adminAuth"; 
+import { ReactNode } from "react";
+import { adminLogout } from "@/pages/api/adminAuth";
 
 type Props = {
   children: ReactNode;
@@ -10,7 +9,6 @@ type Props = {
 
 export default function AdminLayout({ children }: Props) {
   const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
     { name: "🏠 Dashboard", href: "/index" },
@@ -27,22 +25,10 @@ export default function AdminLayout({ children }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white text-black">
-      {/* Mobile header bar */}
-      <div className="md:hidden flex items-center justify-between px-4 py-4 bg-gray-900 text-white">
-        <h2 className="text-xl font-bold">Admin Panel</h2>
-        <button onClick={() => setMobileOpen((prev) => !prev)}>
-          {mobileOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* Sidebar */}
-      <aside
-        className={`${
-          mobileOpen ? "block" : "hidden"
-        } md:block w-full md:w-64 bg-gray-900 text-white md:min-h-screen`}
-      >
-        <div className="px-4 pt-4 pb-2 md:pt-6 md:text-center text-left">
-          <h2 className="text-xl font-bold hidden md:block">Admin Panel</h2>
+      {/* Sticky top nav on mobile, vertical sidebar on desktop */}
+      <aside className="w-full md:w-64 bg-gray-900 text-white sticky top-0 z-50 md:relative md:top-auto">
+        <div className="px-4 py-4 md:py-6 md:text-center">
+          <h2 className="text-xl font-bold">Admin Panel</h2>
         </div>
 
         <nav>
@@ -52,9 +38,10 @@ export default function AdminLayout({ children }: Props) {
                 <Link
                   href={item.href}
                   className={`block px-3 py-2 rounded hover:bg-gray-700 ${
-                    router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
+                    router.pathname === item.href
+                      ? "bg-gray-800 font-semibold"
+                      : ""
                   }`}
-                  onClick={() => setMobileOpen(false)}
                 >
                   {item.name}
                 </Link>
