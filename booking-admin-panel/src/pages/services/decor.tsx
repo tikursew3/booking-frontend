@@ -227,13 +227,13 @@ export default function DecorAdminPage() {
                   <td className="text-right space-x-2 pr-4">
                     <button
                       onClick={() => handleEdit(item)}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded"
+                      className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
                     >
                       Delete
                     </button>
