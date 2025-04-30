@@ -26,7 +26,7 @@ export default function AdminLayout({ children }: Props) {
   return (
     <div className="min-h-screen flex bg-white text-black overflow-x-auto">
       {/* Sidebar stays fixed width on all screens */}
-      <aside className="w-64 bg-gray-900 text-white flex-shrink-0 min-h-screen">
+      <aside className="w-64 bg-gray-900 text-white flex-shrink-1 min-h-screen">
         <div className="px-4 py-6 text-center border-b border-gray-700">
           <h2 className="text-xl font-bold">Admin Panel</h2>
         </div>
