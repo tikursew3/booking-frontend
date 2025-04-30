@@ -12,7 +12,7 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
   formData.append("upload_preset", "unsigned_decor_upload"); // my Cloudinary preset name
 
   const response = await axios.post<CloudinaryUploadResponse>(
-    "https://api.cloudinary.com/v1_1/<dyz6pt46f>/image/upload", // my cloud name -> dyz6pt46f
+    "https://api.cloudinary.com/v1_1/dyz6pt46f/image/upload", // my cloud name -> dyz6pt46f
     formData
   );
 
