@@ -47,9 +47,7 @@ export default function AdminLayout({ children }: Props) {
                 </Link>
               </li>
             ))}
-          </ul>
-
-          <div className="px-2 mt-6 mb-4">
+            <div className="px-2 mt-6 mb-4">
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
@@ -58,6 +56,9 @@ export default function AdminLayout({ children }: Props) {
               <span className="hidden md:inline">Logout</span>
             </button>
           </div>
+          </ul>
+
+          
         </nav>
       </aside>
 
