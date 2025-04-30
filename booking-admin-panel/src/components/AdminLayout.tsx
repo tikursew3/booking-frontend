@@ -24,9 +24,9 @@ export default function AdminLayout({ children }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-row bg-white text-black">
-      {/* Sidebar always on the left */}
-      <aside className="w-64 bg-gray-900 text-white min-h-screen flex-shrink-0">
+    <div className="min-h-screen flex bg-white text-black overflow-x-auto">
+      {/* Sidebar stays fixed width on all screens */}
+      <aside className="w-64 bg-gray-900 text-white flex-shrink-0 min-h-screen">
         <div className="px-4 py-6 text-center border-b border-gray-700">
           <h2 className="text-xl font-bold">Admin Panel</h2>
         </div>
@@ -60,8 +60,10 @@ export default function AdminLayout({ children }: Props) {
         </nav>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 bg-gray-100 p-4 overflow-x-auto">{children}</main>
+      {/* Main content shrinks automatically */}
+      <main className="flex-1 p-4 bg-gray-100 overflow-x-auto">
+        {children}
+      </main>
     </div>
   );
 }
