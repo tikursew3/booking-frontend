@@ -165,7 +165,22 @@ export default function DecorAdminPage() {
               required
             />
             {formData.imageUrl && (
-              <img src={formData.imageUrl} alt="Preview" className="w-24 mt-2 rounded" />
+              <div className="mt-2">
+                <img
+                  src={formData.imageUrl}
+                  alt="Preview"
+                  className="w-24 rounded border"
+                />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, imageUrl: "" }))
+                  }
+                  className="text-red-600 mt-1 text-sm underline"
+                >
+                  Remove Image
+                </button>
+              </div>
             )}
             <input
               type="number"
