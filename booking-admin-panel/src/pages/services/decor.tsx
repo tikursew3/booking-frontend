@@ -136,9 +136,9 @@ export default function DecorAdminPage() {
 
         {showForm && (
           <form
-            onSubmit={handleSubmit}
-            className="bg-white p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl mx-auto"
-          >
+          onSubmit={handleSubmit}
+          className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
+        >
             <input
               type="text"
               name="name"
@@ -161,7 +161,7 @@ export default function DecorAdminPage() {
               accept="image/*"
               placeholder="Image URL"
               onChange={handleImageChange}
-              className="w-full border px-4 py-2 rounded"
+              className="w-full border px-4 py-2 rounded cursor-pointer"
               required
             />
             {formData.imageUrl && (
@@ -236,7 +236,7 @@ export default function DecorAdminPage() {
             </thead>
             <tbody>
             {decorItems
-              .slice() // create a shallow copy
+              ?.slice() // create a shallow copy
               .sort((a, b) => a.id - b.id) // sort by ID for consistent order
               .map((item) => ( //when you toggle active/inactive status, the item will stay in place
                 <tr key={item.id} className="border-t">
