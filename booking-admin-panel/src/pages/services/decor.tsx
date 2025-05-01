@@ -235,7 +235,10 @@ export default function DecorAdminPage() {
               </tr>
             </thead>
             <tbody>
-              {decorItems.map((item) => (
+            {decorItems
+              .slice() // create a shallow copy
+              .sort((a, b) => a.id - b.id) // sort by ID for consistent order
+              .map((item) => ( //when you toggle active/inactive status, the item will stay in place
                 <tr key={item.id} className="border-t">
                   <td className="p-4">
                     <img
