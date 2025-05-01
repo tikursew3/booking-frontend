@@ -158,10 +158,8 @@ export default function DecorAdminPage() {
             />
             <input
               type="file"
-              name="imageUrl"
               accept="image/*"
               placeholder="Image URL"
-              value={formData.imageUrl}
               onChange={handleImageChange}
               className="w-full border px-4 py-2 rounded"
               required
