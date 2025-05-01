@@ -3,11 +3,9 @@ import axios from "axios";
 //import Router from "next/router"; // Important: use Next.js router manually
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL // Your backend base URL
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Your backend base URL
+  withCredentials: true // Send cookies automatically
 });
-
-// Send cookies automatically
-axios.defaults.withCredentials = true;
 
 /*
 
