@@ -75,23 +75,23 @@ export default function BookingsPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full md:w-4/3 border px-4 py-2 rounded-lg shadow-sm"
          />
-            </div>
+          </div>
 
 
-        <div>
-            <label className="mr-2 text-gray-700 font-medium">Status:</label>
-            <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as "ALL" | "CONFIRMED" | "PENDING" | "CANCELLED")}
-            className="border rounded px-3 py-1"
-            >
-            <option value="ALL">All</option>
-            <option value="PENDING">🟠 Pending</option>
-            <option value="CONFIRMED">✅ Confirmed</option>
-         
-            <option value="CANCELLED">❌ Cancelled</option>
-            </select>
-        </div>
+          <div>
+              <label className="mr-2 text-gray-700 font-medium">Status:</label>
+              <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as "ALL" | "CONFIRMED" | "PENDING" | "CANCELLED")}
+              className="border rounded px-3 py-1"
+              >
+              <option value="ALL">All</option>
+              <option value="PENDING">🟠 Pending</option>
+              <option value="CONFIRMED">✅ Confirmed</option>
+          
+              <option value="CANCELLED">❌ Cancelled</option>
+              </select>
+          </div>
         </div>
 
 
