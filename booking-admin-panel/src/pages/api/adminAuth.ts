@@ -1,5 +1,6 @@
 // src/services/adminAuth.ts
-import api from '@/lib/axios';
+//import api from '@/lib/axios';
+import axios from 'axios';
 
 /**
  * Logs in the admin using session-based authentication.
@@ -11,8 +12,8 @@ import api from '@/lib/axios';
  */
 export const adminLogin = async (email: string, password: string) => {
 
-  return api.post(
-    '/api/admin-login',
+  return axios.post(
+    'https://photography-booking.onrender.com/api/admin-login',
     {
         email,
         password
@@ -31,7 +32,7 @@ export const adminLogin = async (email: string, password: string) => {
  * Logs out the admin by clearing the session cookie.
  */
 export const adminLogout = async () => {
-  return api.post('/api/admin-logout', null, {
+  return axios.post('https://photography-booking.onrender.com/api/admin-logout', null, {
     withCredentials: true,
   });
 };
