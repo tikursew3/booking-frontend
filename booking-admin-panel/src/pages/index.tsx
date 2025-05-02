@@ -50,7 +50,7 @@ export default function Dashboard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get('/api/admin-auth-check', { withCredentials: true });
+        await api.get('/api/admin-auth-check');
         setAuthChecked(true);
       } catch {
         router.push("/admin/login");
