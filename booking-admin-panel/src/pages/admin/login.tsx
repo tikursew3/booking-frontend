@@ -1,7 +1,7 @@
 // src/pages/admin/login.tsx
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { adminAuth } from '@/pages/api/adminAuth'; // Adjust the import path as needed
+import { adminLogin } from '@/pages/api/adminAuth'; // Adjust the import path as needed
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      await adminAuth(email, password);
+      await adminLogin(email, password);
       router.push('/'); //  Redirect to admin dashboard after login (adjust as needed)
     } catch {
       setError('Login failed. Please check your email and password.');

@@ -1,6 +1,7 @@
 // src/services/adminAuth.ts
-//import api from '@/lib/axios';
-import axios from 'axios';
+import api from '@/lib/axios';
+
+//import axios from 'axios';
 
 /**
  * Logs in the admin using session-based authentication.
@@ -10,29 +11,30 @@ import axios from 'axios';
  * @param password Admin password
  * @returns Axios response promise
  */
-export const adminAuth = async (email: string, password: string) => {
-
-  return axios.post(
-    'https://photography-booking.onrender.com/api/admin-login',
-    {
-        email,
-        password
-      },
-      {
-        withCredentials: true, // Important for session cookies
-        headers: {
-          'Content-Type': 'application/json', // Send JSON now (not form-urlencoded)
-        },
-      }
-  );
+type AdminLoginResponse = {
+  token: string;
 };
 
-
-/**
- * Logs out the admin by clearing the session cookie.
- */
-export const adminLogout = async () => {
-  return axios.post('https://photography-booking.onrender.com/api/admin-logout', null, {
-    withCredentials: true,
+export const adminLogin = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  const response = await api.post<AdminLoginResponse>('/api/admin-login', {
+    email,
+    password,
   });
+
+  const token = response.data.token;
+  if (token) {
+    localStorage.setItem('admin_token', token);
+  }
+
+
 };
+
+export const adminLogout = async () => {
+  localStorage.removeItem('admin_token');
+};
+
+
+
