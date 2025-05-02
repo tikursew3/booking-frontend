@@ -10,7 +10,7 @@ import axios from 'axios';
  * @param password Admin password
  * @returns Axios response promise
  */
-export const adminLogin = async (email: string, password: string) => {
+export const adminAuth = async (email: string, password: string) => {
 
   return axios.post(
     'https://photography-booking.onrender.com/api/admin-login',
