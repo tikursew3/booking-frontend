@@ -25,6 +25,9 @@ export const adminLogin = async (
   });
 
   const token = response.data.token;
+
+  console.log("Received token:", token); // this is for debugging
+
   if (token) {
     console.log("Saving token:", token); // Add this for debugging
     localStorage.setItem('admin_token', token);
