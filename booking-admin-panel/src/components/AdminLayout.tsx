@@ -38,13 +38,13 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 ${
+                  className={`group flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 ${
                     router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
                   }`}
                   title={item.name} // native tooltip
                 >
                   {item.icon}
-                  <span className="hidden md:inline">{item.name}</span>
+                  <span className="hidden md:inline group-hover:text-red-400 transition-colors duration-200">{item.name}</span>
                 </Link>
               </li>
             ))}
