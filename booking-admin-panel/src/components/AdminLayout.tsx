@@ -38,7 +38,7 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-black-700 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 ${
                     router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
                   }`}
                   title={item.name} // native tooltip
