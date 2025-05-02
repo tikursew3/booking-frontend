@@ -64,7 +64,7 @@ export default function AdminLayout({ children }: Props) {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-4 bg-gray-100 overflow-x-auto">{children}</main>
+      <main className="flex-1 p-3 bg-gray-100 overflow-x-auto">{children}</main>
     </div>
   );
 }
