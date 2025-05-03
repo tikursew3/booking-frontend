@@ -1,6 +1,7 @@
 import { PhotographyService } from "@/types/types";
 import { useState, useEffect } from "react";
 import CloudinaryImagePicker from "@/components/CloudinaryImagePicker"; // adjust path if needed
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
 type Props = {
   initialData?: PhotographyService | null;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
-  const [showImagePicker, setShowImagePicker] = useState(false);
+  
   const [formData, setFormData] = useState<Omit<PhotographyService, "id">>({
     name: "",
     description: "",
@@ -19,6 +20,8 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
     duration: "1 hour",
     active: true,
   });
+
+  const [showImagePicker, setShowImagePicker] = useState(false);
 
   useEffect(() => {
     if (initialData) {
@@ -34,6 +37,20 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
       [name]: name === "price" || name === "depositAmount" ? parseFloat(value) : value,
     }));
   };
+
+  const handleLocalImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const uploadedUrl = await uploadToCloudinary(file);
+      setFormData((prev) => ({ ...prev, imageUrl: uploadedUrl }));
+    } catch (err) {
+      console.error("Local image upload failed:", err);
+      alert("Image upload failed. Please try again.");
+    }
+  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +83,15 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             required
           />
 
+           {/* 📁 Local Upload */}
+           <input
+            type="file"
+            accept="image/*"
+            onChange={handleLocalImageChange}
+            className="w-full border px-4 py-2 rounded cursor-pointer"
+          />
+
+          {/* ☁️ Cloudinary Picker Trigger */}
           <button
             type="button"
             onClick={() => setShowImagePicker(true)}
@@ -74,6 +100,17 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             📷 Choose from Cloudinary
           </button>
 
+           {/* ☁️ Cloudinary Picker Modal */}
+           {showImagePicker && (
+            <CloudinaryImagePicker
+              onSelect={(url) => {
+                setFormData((prev) => ({ ...prev, imageUrl: url }));
+                setShowImagePicker(false);
+              }}
+              onClose={() => setShowImagePicker(false)}
+            />
+          )}
+          {/* Preview + Remove */}
           {formData.imageUrl && (
             <div className="mt-2">
               <img
@@ -81,6 +118,7 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
                 alt="Selected"
                 className="w-24 rounded border"
               />
+
               <button
                 type="button"
                 onClick={() =>
@@ -93,15 +131,6 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             </div>
           )}
 
-            {showImagePicker && (
-              <CloudinaryImagePicker
-                onSelect={(url) => {
-                  setFormData((prev) => ({ ...prev, imageUrl: url }));
-                  setShowImagePicker(false);
-                }}
-                onClose={() => setShowImagePicker(false)}
-              />
-            )}
 
           <input
             type="number"
