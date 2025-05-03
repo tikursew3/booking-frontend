@@ -76,7 +76,7 @@ export default function PhotographyServicesPage() {
             <h1 className="text-3xl font-bold">📸 Photography Services</h1>
             <button
               onClick={openAddForm}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              className="bg-blue-600  text-white py-2 p-4 sm:p-6 rounded-xl mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh"
             >
               + Add New
             </button>
