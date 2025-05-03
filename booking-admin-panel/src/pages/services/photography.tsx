@@ -72,11 +72,11 @@ export default function PhotographyServicesPage() {
     <AdminLayout>
       <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
         <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 w-full max-w-full overflow-hidden">
             <h1 className="text-3xl font-bold">📸 Photography Services</h1>
             <button
               onClick={openAddForm}
-              className="bg-blue-600  text-white py-2 p-4 sm:p-6 rounded-xl mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh"
+              className="bg-blue-600 text-white p-4 sm:p-6 rounded-xl mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh"
             >
               + Add New
             </button>
