@@ -76,7 +76,7 @@ export default function PhotographyServicesPage() {
             <h1 className="text-3xl font-bold">📸 Photography Services</h1>
             <button
               onClick={openAddForm}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mx-auto overflow-y-auto overflow-x-hidden max-h-[90vh]"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
             >
               + Add New
             </button>
@@ -85,7 +85,7 @@ export default function PhotographyServicesPage() {
           {isLoading && <p>Loading...</p>}
           {error && <p className="text-red-500">Failed to load services</p>}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full overflow-hidden">
             {services
               ?.slice()
               .sort((a, b) => a.id - b.id)
