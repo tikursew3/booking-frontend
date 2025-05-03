@@ -78,7 +78,7 @@ export default function BookingsPage() {
               placeholder="Search by name or email"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-4/3 border px-4 py-2 rounded-lg shadow-sm"
+              className="md:w-4/2 border px-4 py-2 rounded-lg shadow-sm"
             />
           </div>
 
