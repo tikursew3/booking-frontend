@@ -68,105 +68,108 @@ export default function AdminCalendarPage() {
 
   return (
     <AdminLayout>
-      <main className="p-5 justify-center items-center">
-        <h1 className="text-2xl font-bold mb-6">📅 Booking Calendar</h1>
+      <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
+        <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
+          <h1 className="text-2xl font-bold mb-6">📅 Booking Calendar</h1>
 
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-          <div>
-            <label className="mr-2 font-medium">Type:</label>
-            <select
-              value={filter}
-              onChange={(e) =>
-                setFilter(
-                  e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
-                )
-              }
-              className="border px-3 py-1 rounded"
-            >
-              <option value="ALL">All</option>
-              <option value="PHOTOGRAPHY">📸 Photography</option>
-              <option value="CONSULTATION">💬 Consultation</option>
-            </select>
+          {/* Filters */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+            <div>
+              <label className="mr-2 font-medium">Type:</label>
+              <select
+                value={filter}
+                onChange={(e) =>
+                  setFilter(
+                    e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+                  )
+                }
+                className="border px-3 py-1 rounded"
+              >
+                <option value="ALL">All</option>
+                <option value="PHOTOGRAPHY">📸 Photography</option>
+                <option value="CONSULTATION">💬 Consultation</option>
+              </select>
+            </div>
+            <div>
+              <label className="mr-2 font-medium">Status:</label>
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(
+                    e.target.value as "ALL" | "CONFIRMED" | "PENDING"
+                  )
+                }
+                className="border px-3 py-1 rounded"
+              >
+                <option value="ALL">All</option>
+                <option value="CONFIRMED">✅ Confirmed</option>
+                <option value="PENDING">🟠 Pending</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <label className="mr-2 font-medium">Status:</label>
-            <select
-              value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(
-                  e.target.value as "ALL" | "CONFIRMED" | "PENDING"
-                )
-              }
-              className="border px-3 py-1 rounded"
-            >
-              <option value="ALL">All</option>
-              <option value="CONFIRMED">✅ Confirmed</option>
-              <option value="PENDING">🟠 Pending</option>
-            </select>
-          </div>
-        </div>
 
-        {/* Selected Event Popup */}
-        {selectedEvent && (
-          <div className="bg-blue-50 border border-blue-300 rounded-xl p-4 mb-6">
-            <h2 className="text-lg font-bold">{selectedEvent.title}</h2>
-            <p>
-              <strong>Type:</strong> {selectedEvent.bookingType} <br />{" "}
-              <strong>Status:</strong> {selectedEvent.status}
-            </p>
-            <p>
-              {selectedEvent && selectedEvent.start && (
-                <p>
-                  <strong>Start:</strong> {selectedEvent.start.toLocaleString()}
-                </p>
-              )}
-              {selectedEvent && selectedEvent.end && (
-                <p>
-                  <strong>End:</strong> {selectedEvent.end.toLocaleString()}
-                </p>
-              )}
-            </p>
-            <button
-              onClick={() => setSelectedEvent(null)}
-              className="mt-3 bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded"
-            >
-              Close
-            </button>
-          </div>
-        )}
+          {/* Selected Event Popup */}
+          {selectedEvent && (
+            <div className="bg-blue-50 border border-blue-300 rounded-xl p-4 mb-6">
+              <h2 className="text-lg font-bold">{selectedEvent.title}</h2>
+              <p>
+                <strong>Type:</strong> {selectedEvent.bookingType} <br />{" "}
+                <strong>Status:</strong> {selectedEvent.status}
+              </p>
+              <p>
+                {selectedEvent && selectedEvent.start && (
+                  <p>
+                    <strong>Start:</strong>{" "}
+                    {selectedEvent.start.toLocaleString()}
+                  </p>
+                )}
+                {selectedEvent && selectedEvent.end && (
+                  <p>
+                    <strong>End:</strong> {selectedEvent.end.toLocaleString()}
+                  </p>
+                )}
+              </p>
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded"
+              >
+                Close
+              </button>
+            </div>
+          )}
 
-        {/* Calendar */}
-        <div style={{ height: "80vh" }}>
-          <Calendar
-            localizer={localizer}
-            events={filteredEvents}
-            startAccessor="start"
-            endAccessor="end"
-            onSelectEvent={(e) => setSelectedEvent(e)}
-            style={{
-              height: "100%",
-              backgroundColor: "white",
-              borderRadius: "12px",
-              padding: "1rem",
-            }}
-            eventPropGetter={(event) => {
-              const bgColor =
-                event.status === "CONFIRMED"
-                  ? "#34d399"
-                  : event.status === "PENDING"
-                  ? "#fbbf24"
-                  : "#60a5fa";
-              return {
-                style: {
-                  backgroundColor: bgColor,
-                  color: "white",
-                  borderRadius: "6px",
-                  padding: "4px 6px",
-                },
-              };
-            }}
-          />
+          {/* Calendar */}
+          <div style={{ height: "80vh" }}>
+            <Calendar
+              localizer={localizer}
+              events={filteredEvents}
+              startAccessor="start"
+              endAccessor="end"
+              onSelectEvent={(e) => setSelectedEvent(e)}
+              style={{
+                height: "100%",
+                backgroundColor: "white",
+                borderRadius: "12px",
+                padding: "1rem",
+              }}
+              eventPropGetter={(event) => {
+                const bgColor =
+                  event.status === "CONFIRMED"
+                    ? "#34d399"
+                    : event.status === "PENDING"
+                    ? "#fbbf24"
+                    : "#60a5fa";
+                return {
+                  style: {
+                    backgroundColor: bgColor,
+                    color: "white",
+                    borderRadius: "6px",
+                    padding: "4px 6px",
+                  },
+                };
+              }}
+            />
+          </div>
         </div>
       </main>
     </AdminLayout>

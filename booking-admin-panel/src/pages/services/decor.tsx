@@ -116,181 +116,183 @@ export default function DecorAdminPage() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">🎀 Manage Decor Items</h1>
-          <button
-            onClick={() => {
-              setEditingItem(null);
-              setFormData({
-                name: "",
-                description: "",
-                imageUrl: "",
-                pricePerDay: 0,
-                active: true,
-              });
-              setShowForm(true);
-            }}
-            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl"
-          >
-            ➕ Add New Decor Item
-          </button>
-        </div>
+      <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
+        <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold">🎀 Manage Decor Items</h1>
+            <button
+              onClick={() => {
+                setEditingItem(null);
+                setFormData({
+                  name: "",
+                  description: "",
+                  imageUrl: "",
+                  pricePerDay: 0,
+                  active: true,
+                });
+                setShowForm(true);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl"
+            >
+              ➕ Add New Decor Item
+            </button>
+          </div>
 
-        {showForm && (
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Description"
-              value={formData.description}
-              onChange={handleInputChange}
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <input
-              type="file"
-              accept="image/*"
-              placeholder="Image URL"
-              onChange={handleImageChange}
-              className="w-full border px-4 py-2 rounded cursor-pointer"
-              required
-            />
-            {formData.imageUrl && (
-              <div className="mt-2">
-                <img
-                  src={formData.imageUrl}
-                  alt="Preview"
-                  className="w-24 rounded border"
+          {showForm && (
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
+            >
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full border px-4 py-2 rounded"
+                required
+              />
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleInputChange}
+                className="w-full border px-4 py-2 rounded"
+                required
+              />
+              <input
+                type="file"
+                accept="image/*"
+                placeholder="Image URL"
+                onChange={handleImageChange}
+                className="w-full border px-4 py-2 rounded cursor-pointer"
+                required
+              />
+              {formData.imageUrl && (
+                <div className="mt-2">
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    className="w-24 rounded border"
+                  />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData((prev) => ({ ...prev, imageUrl: "" }))
+                    }
+                    className="text-red-600 mt-1 text-sm underline"
+                  >
+                    Remove Image
+                  </button>
+                </div>
+              )}
+              <input
+                type="number"
+                name="pricePerDay"
+                placeholder="Price per day"
+                value={formData.pricePerDay}
+                onChange={handleInputChange}
+                className="w-full border px-4 py-2 rounded"
+                required
+              />
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="active"
+                  checked={formData.active}
+                  onChange={handleInputChange}
                 />
+                Active
+              </label>
+
+              <div className="flex justify-between items-center">
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl"
+                >
+                  {editingItem ? "Update Item" : "Add Item"}
+                </button>
                 <button
                   type="button"
-                  onClick={() =>
-                    setFormData((prev) => ({ ...prev, imageUrl: "" }))
-                  }
-                  className="text-red-600 mt-1 text-sm underline"
+                  onClick={() => setShowForm(false)}
+                  className="text-gray-500 hover:underline"
                 >
-                  Remove Image
+                  Cancel
                 </button>
               </div>
-            )}
-            <input
-              type="number"
-              name="pricePerDay"
-              placeholder="Price per day"
-              value={formData.pricePerDay}
-              onChange={handleInputChange}
-              className="w-full border px-4 py-2 rounded"
-              required
-            />
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="active"
-                checked={formData.active}
-                onChange={handleInputChange}
-              />
-              Active
-            </label>
+            </form>
+          )}
 
-            <div className="flex justify-between items-center">
-              <button
-                type="submit"
-                className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl"
-              >
-                {editingItem ? "Update Item" : "Add Item"}
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowForm(false)}
-                className="text-gray-500 hover:underline"
-              >
-                Cancel
-              </button>
+          {isLoading && <p>Loading...</p>}
+          {error && <p className="text-red-500">Failed to load decor items.</p>}
+
+          {decorItems && decorItems.length > 0 && (
+            <div className="overflow-x-auto bg-white shadow rounded-xl">
+              <table className="w-full bg-white table-auto shadow-md rounded-xl overflow-hidden">
+                <thead className="bg-gray-100">
+                  <tr className="text-left">
+                    <th className="p-4">Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th className="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {decorItems
+                    ?.slice() // create a shallow copy
+                    .sort((a, b) => a.id - b.id) // sort by ID for consistent order
+                    .map(
+                      (
+                        item //when you toggle active/inactive status, the item will stay in place
+                      ) => (
+                        <tr key={item.id} className="border-t">
+                          <td className="p-4">
+                            <img
+                              src={item.imageUrl}
+                              alt={item.name}
+                              className="w-20 h-14 object-cover rounded"
+                            />
+                          </td>
+                          <td>{item.name}</td>
+                          <td className="max-w-xs truncate">
+                            {item.description}
+                          </td>
+                          <td>${item.pricePerDay.toFixed(2)}</td>
+                          <td>
+                            <button
+                              onClick={() => handleToggle(item)}
+                              className={`px-3 py-1 rounded ${
+                                item.active ? "bg-green-600" : "bg-gray-400"
+                              } text-white`}
+                            >
+                              {item.active ? "Active" : "Inactive"}
+                            </button>
+                          </td>
+                          <td className="text-right space-x-2 pr-4">
+                            <button
+                              onClick={() => handleEdit(item)}
+                              className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(item.id)}
+                              className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    )}
+                </tbody>
+              </table>
             </div>
-          </form>
-        )}
-
-        {isLoading && <p>Loading...</p>}
-        {error && <p className="text-red-500">Failed to load decor items.</p>}
-
-        {decorItems && decorItems.length > 0 && (
-          <div className="overflow-x-auto bg-white shadow rounded-xl">
-            <table className="w-full bg-white table-auto shadow-md rounded-xl overflow-hidden">
-              <thead className="bg-gray-100">
-                <tr className="text-left">
-                  <th className="p-4">Image</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  <th className="text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {decorItems
-                  ?.slice() // create a shallow copy
-                  .sort((a, b) => a.id - b.id) // sort by ID for consistent order
-                  .map(
-                    (
-                      item //when you toggle active/inactive status, the item will stay in place
-                    ) => (
-                      <tr key={item.id} className="border-t">
-                        <td className="p-4">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.name}
-                            className="w-20 h-14 object-cover rounded"
-                          />
-                        </td>
-                        <td>{item.name}</td>
-                        <td className="max-w-xs truncate">
-                          {item.description}
-                        </td>
-                        <td>${item.pricePerDay.toFixed(2)}</td>
-                        <td>
-                          <button
-                            onClick={() => handleToggle(item)}
-                            className={`px-3 py-1 rounded ${
-                              item.active ? "bg-green-600" : "bg-gray-400"
-                            } text-white`}
-                          >
-                            {item.active ? "Active" : "Inactive"}
-                          </button>
-                        </td>
-                        <td className="text-right space-x-2 pr-4">
-                          <button
-                            onClick={() => handleEdit(item)}
-                            className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDelete(item.id)}
-                            className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  )}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </main>
     </AdminLayout>
   );
 }
