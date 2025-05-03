@@ -46,7 +46,7 @@ export default function Dashboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarKey, setCalendarKey] = useState(0);
 
-  // ✅ 1. Check authentication before rendering anything
+  //  1. Check authentication before rendering anything
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -62,7 +62,7 @@ export default function Dashboard() {
 
   
 
-  // ✅ 3. Load calendar events
+  //  3. Load calendar events
   useEffect(() => {
     if (!authChecked) return;
 
@@ -72,7 +72,8 @@ export default function Dashboard() {
       .catch((err) => console.error("Failed to load calendar data", err));
   }, [authChecked]);
 
-  // ✅ 4. Load dashboard summary
+
+  //  4. Load dashboard summary
   useEffect(() => {
     if (!authChecked) return;
 
