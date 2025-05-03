@@ -72,17 +72,17 @@ export default function BookingsPage() {
             </select>
           </div>
 
-          <div className="mb-6 w-full max-w-full overflow-hidden">
+          <div className="mb-6 overflow-hidden">
             <input
               type="text"
               placeholder="Search by name or email"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="md:w-4/2 border px-4 py-2 rounded-lg shadow-sm"
+              className="border px-4 py-2 rounded shadow-sm"
             />
           </div>
 
-          <div className="mb-6 w-full max-w-full overflow-hidden">
+          <div className="mb-6">
             <label className="mr-2 text-gray-700 font-medium">Status:</label>
             <select
               value={statusFilter}
