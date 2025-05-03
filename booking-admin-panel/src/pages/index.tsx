@@ -115,7 +115,7 @@ export default function Dashboard() {
 
   return (
     <AdminLayout>
-      <main className="p-8">
+      <main className="p-5 items-center">
         <h1 className="text-3xl font-bold mb-8 text-center">
           📊 Dashboard Overview
         </h1>
