@@ -51,8 +51,8 @@ export default function BookingsPage() {
 
   return (
     <AdminLayout>
-      <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
-        <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
+      <main className="flex-1 p-4 bg-gray-100 ">
+        <div className="w-full max-w-full md:max-w-4xl mx-auto ">
           <h1 className="text-2xl font-bold mb-6">📋 All Bookings</h1>
 
           <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
