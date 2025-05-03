@@ -1,4 +1,3 @@
-
 import { useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/AdminLayout";
 import api from "@/lib/axios";
@@ -35,7 +34,7 @@ export default function DecorAdminPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
-  
+
     if (type === "checkbox") {
       const checked = (e.target as HTMLInputElement).checked; // Narrow to HTMLInputElement
       setFormData((prev) => ({
@@ -49,11 +48,11 @@ export default function DecorAdminPage() {
       }));
     }
   };
-  
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-  
+
     //  handle the Cloudinary upload
     try {
       const uploadedUrl = await uploadToCloudinary(file);
@@ -63,7 +62,6 @@ export default function DecorAdminPage() {
       alert("Image upload failed. Please try again.");
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +73,13 @@ export default function DecorAdminPage() {
     }
 
     setEditingItem(null);
-    setFormData({ name: "", description: "", imageUrl: "", pricePerDay: 0, active: true });
+    setFormData({
+      name: "",
+      description: "",
+      imageUrl: "",
+      pricePerDay: 0,
+      active: true,
+    });
     setShowForm(false);
   };
 
@@ -109,11 +113,10 @@ export default function DecorAdminPage() {
       console.error("Toggle failed", err);
     }
   };
-  
 
   return (
     <AdminLayout>
-      <div className="p-5">
+      <div className="p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">🎀 Manage Decor Items</h1>
           <button
@@ -136,9 +139,9 @@ export default function DecorAdminPage() {
 
         {showForm && (
           <form
-          onSubmit={handleSubmit}
-          className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
-        >
+            onSubmit={handleSubmit}
+            className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
+          >
             <input
               type="text"
               name="name"
@@ -224,60 +227,67 @@ export default function DecorAdminPage() {
 
         {decorItems && decorItems.length > 0 && (
           <div className="overflow-x-auto bg-white shadow rounded-xl">
-           <table className="w-full bg-white table-auto shadow-md rounded-xl overflow-hidden">
-            <thead className="bg-gray-100">
-              <tr className="text-left">
-                <th className="p-4">Image</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th className="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            {decorItems
-              ?.slice() // create a shallow copy
-              .sort((a, b) => a.id - b.id) // sort by ID for consistent order
-              .map((item) => ( //when you toggle active/inactive status, the item will stay in place
-                <tr key={item.id} className="border-t">
-                  <td className="p-4">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      className="w-20 h-14 object-cover rounded"
-                    />
-                  </td>
-                  <td>{item.name}</td>
-                  <td className="max-w-xs truncate">{item.description}</td>
-                  <td>${item.pricePerDay.toFixed(2)}</td>
-                  <td>
-                  <button
-                    onClick={() => handleToggle(item)}
-                    className={`px-3 py-1 rounded ${item.active ? "bg-green-600" : "bg-gray-400"} text-white`}
-                  >
-                    {item.active ? "Active" : "Inactive"}
-                  </button>
-
-                  </td>
-                  <td className="text-right space-x-2 pr-4">
-                    <button
-                      onClick={() => handleEdit(item)}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
+            <table className="w-full bg-white table-auto shadow-md rounded-xl overflow-hidden">
+              <thead className="bg-gray-100">
+                <tr className="text-left">
+                  <th className="p-4">Image</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th className="text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {decorItems
+                  ?.slice() // create a shallow copy
+                  .sort((a, b) => a.id - b.id) // sort by ID for consistent order
+                  .map(
+                    (
+                      item //when you toggle active/inactive status, the item will stay in place
+                    ) => (
+                      <tr key={item.id} className="border-t">
+                        <td className="p-4">
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
+                            className="w-20 h-14 object-cover rounded"
+                          />
+                        </td>
+                        <td>{item.name}</td>
+                        <td className="max-w-xs truncate">
+                          {item.description}
+                        </td>
+                        <td>${item.pricePerDay.toFixed(2)}</td>
+                        <td>
+                          <button
+                            onClick={() => handleToggle(item)}
+                            className={`px-3 py-1 rounded ${
+                              item.active ? "bg-green-600" : "bg-gray-400"
+                            } text-white`}
+                          >
+                            {item.active ? "Active" : "Inactive"}
+                          </button>
+                        </td>
+                        <td className="text-right space-x-2 pr-4">
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  )}
+              </tbody>
+            </table>
           </div>
         )}
       </div>

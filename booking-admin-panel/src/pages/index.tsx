@@ -39,9 +39,14 @@ export default function Dashboard() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [serviceData, setServiceData] = useState<ServiceBookingData[]>([]);
-  const [bookingTypeFilter, setBookingTypeFilter] = useState<"ALL" | "PHOTOGRAPHY" | "CONSULTATION">("ALL");
-  const [calendarEvents, setCalendarEvents] = useState<BookingCalendarEventDTO[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<BookingCalendarEventDTO | null>(null);
+  const [bookingTypeFilter, setBookingTypeFilter] = useState<
+    "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+  >("ALL");
+  const [calendarEvents, setCalendarEvents] = useState<
+    BookingCalendarEventDTO[]
+  >([]);
+  const [selectedEvent, setSelectedEvent] =
+    useState<BookingCalendarEventDTO | null>(null);
   const [calendarView, setCalendarView] = useState<"month" | "week">("month");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarKey, setCalendarKey] = useState(0);
@@ -50,7 +55,7 @@ export default function Dashboard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get('/api/admin-auth-check');
+        await api.get("/api/admin-auth-check");
         setAuthChecked(true);
       } catch {
         router.push("/admin/login");
@@ -59,8 +64,6 @@ export default function Dashboard() {
 
     checkAuth();
   }, []);
-
-  
 
   //  3. Load calendar events
   useEffect(() => {
@@ -71,7 +74,6 @@ export default function Dashboard() {
       .then((res) => setCalendarEvents(res.data))
       .catch((err) => console.error("Failed to load calendar data", err));
   }, [authChecked]);
-
 
   //  4. Load dashboard summary
   useEffect(() => {
@@ -96,22 +98,27 @@ export default function Dashboard() {
     api
       .get<ServiceBookingData[]>("/api/bookings/bookings-by-service")
       .then((res) => setServiceData(res.data))
-      .catch((err) => console.error("Failed to load service booking chart data", err));
+      .catch((err) =>
+        console.error("Failed to load service booking chart data", err)
+      );
   }, [authChecked]);
 
   // Safe to place conditional return here — AFTER all hooks
   //Protect rendering until authenticated
-if (!authChecked) {
-  return <div className="p-8">Checking authentication...</div>;
-}
+  if (!authChecked) {
+    return <div className="p-8">Checking authentication...</div>;
+  }
 
   if (loading) return <div className="p-8">Loading dashboard...</div>;
-  if (!summary) return <div className="p-8 text-red-500">Failed to load summary.</div>;
+  if (!summary)
+    return <div className="p-8 text-red-500">Failed to load summary.</div>;
 
   return (
     <AdminLayout>
       <main className="p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">📊 Dashboard Overview</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          📊 Dashboard Overview
+        </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card title="📅 Total Bookings" value={summary.totalBookings} />
@@ -120,14 +127,22 @@ if (!authChecked) {
           <Card title="❌ Cancelled" value={summary.cancelledBookings} />
           <Card title="📸 Photography" value={summary.photographyCount} />
           <Card title="💬 Consultations" value={summary.consultationCount} />
-          <Card title="💰 Total Payments" value={`$${summary.totalPayments.toFixed(2)}`} />
+          <Card
+            title="💰 Total Payments"
+            value={`$${summary.totalPayments.toFixed(2)}`}
+          />
         </div>
 
-        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">📸 Bookings by Service</h2>
+        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+          📸 Bookings by Service
+        </h2>
 
         <div className="w-full h-96">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={serviceData} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
+            <BarChart
+              data={serviceData}
+              margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="serviceName" />
               <YAxis />
@@ -137,12 +152,16 @@ if (!authChecked) {
           </ResponsiveContainer>
         </div>
 
-        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">🗓️ Upcoming Bookings</h2>
+        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+          🗓️ Upcoming Bookings
+        </h2>
         <div className="mb-4 flex justify-end">
           <select
             value={bookingTypeFilter}
             onChange={(e) =>
-              setBookingTypeFilter(e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION")
+              setBookingTypeFilter(
+                e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+              )
             }
             className="border px-3 py-2 rounded-md shadow-sm"
           >
@@ -158,7 +177,9 @@ if (!authChecked) {
             localizer={localizer}
             events={calendarEvents
               .filter((e) =>
-                bookingTypeFilter === "ALL" ? true : e.bookingType === bookingTypeFilter
+                bookingTypeFilter === "ALL"
+                  ? true
+                  : e.bookingType === bookingTypeFilter
               )
               .map((e) => ({
                 ...e,
@@ -209,11 +230,23 @@ if (!authChecked) {
             <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
               <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
                 <h2 className="text-xl font-bold mb-4">Booking Details</h2>
-                <p><strong>📌 Type:</strong> {selectedEvent.bookingType}</p>
-                <p><strong>📅 Start:</strong> {new Date(selectedEvent.start).toLocaleString()}</p>
-                <p><strong>🕓 End:</strong> {new Date(selectedEvent.end).toLocaleString()}</p>
-                <p><strong>📌 Status:</strong> {selectedEvent.status}</p>
-                <p><strong>🧾 Title:</strong> {selectedEvent.title}</p>
+                <p>
+                  <strong>📌 Type:</strong> {selectedEvent.bookingType}
+                </p>
+                <p>
+                  <strong>📅 Start:</strong>{" "}
+                  {new Date(selectedEvent.start).toLocaleString()}
+                </p>
+                <p>
+                  <strong>🕓 End:</strong>{" "}
+                  {new Date(selectedEvent.end).toLocaleString()}
+                </p>
+                <p>
+                  <strong>📌 Status:</strong> {selectedEvent.status}
+                </p>
+                <p>
+                  <strong>🧾 Title:</strong> {selectedEvent.title}
+                </p>
                 <div className="mt-6 text-right">
                   <button
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
