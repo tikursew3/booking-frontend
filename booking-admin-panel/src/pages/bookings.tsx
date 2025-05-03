@@ -107,8 +107,8 @@ export default function BookingsPage() {
             </div>
           </div>
 
-          <div className="bg-white shadow rounded-xl w-full">
-            <table className="w-full table-auto border-collapse">
+          <div className="bg-white shadow rounded-xl w-full overflow-x-hidden">
+            <table className="w-full table-auto border-collapse overflow-x-hidden">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="p-3 text-left">Customer</th>
