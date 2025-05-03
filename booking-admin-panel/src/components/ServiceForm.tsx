@@ -1,6 +1,6 @@
-// src/components/ServiceForm.tsx
 import { PhotographyService } from "@/types/types";
 import { useState, useEffect } from "react";
+import CloudinaryImagePicker from "@/components/CloudinaryImagePicker"; // adjust path if needed
 
 type Props = {
   initialData?: PhotographyService | null;
@@ -9,6 +9,7 @@ type Props = {
 };
 
 export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const [formData, setFormData] = useState<Omit<PhotographyService, "id">>({
     name: "",
     description: "",
@@ -64,14 +65,44 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             rows={3}
             required
           />
-          <input
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleChange}
-            placeholder="Image URL"
-            className="w-full border px-4 py-2 rounded"
-            required
-          />
+
+          <button
+            type="button"
+            onClick={() => setShowImagePicker(true)}
+            className="bg-gray-200 px-4 py-2 rounded"
+          >
+            📷 Choose from Cloudinary
+          </button>
+
+          {formData.imageUrl && (
+            <div className="mt-2">
+              <img
+                src={formData.imageUrl}
+                alt="Selected"
+                className="w-24 rounded border"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setFormData((prev) => ({ ...prev, imageUrl: "" }))
+                }
+                className="text-red-600 mt-1 text-sm underline"
+              >
+                Remove Image
+              </button>
+            </div>
+          )}
+
+            {showImagePicker && (
+              <CloudinaryImagePicker
+                onSelect={(url) => {
+                  setFormData((prev) => ({ ...prev, imageUrl: url }));
+                  setShowImagePicker(false);
+                }}
+                onClose={() => setShowImagePicker(false)}
+              />
+            )}
+
           <input
             type="number"
             name="price"
