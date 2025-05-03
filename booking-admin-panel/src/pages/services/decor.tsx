@@ -166,7 +166,7 @@ export default function DecorAdminPage() {
                 placeholder="Image URL"
                 onChange={handleImageChange}
                 className="w-full border px-4 py-2 rounded cursor-pointer"
-                required
+                
               />
               {formData.imageUrl && (
                 <div className="mt-2">
