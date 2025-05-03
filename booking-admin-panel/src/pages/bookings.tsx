@@ -72,7 +72,7 @@ export default function BookingsPage() {
             </select>
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 w-full max-w-full overflow-hidden">
             <input
               type="text"
               placeholder="Search by name or email"
@@ -82,7 +82,7 @@ export default function BookingsPage() {
             />
           </div>
 
-          <div>
+          <div className="mb-6 w-full max-w-full overflow-hidden">
             <label className="mr-2 text-gray-700 font-medium">Status:</label>
             <select
               value={statusFilter}
