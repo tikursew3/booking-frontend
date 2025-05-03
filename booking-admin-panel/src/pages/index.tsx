@@ -115,149 +115,153 @@ export default function Dashboard() {
 
   return (
     <AdminLayout>
-      <main className="p-5 items-center">
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          📊 Dashboard Overview
-        </h1>
+      <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
+        <div className="max-w-full md:max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8 text-center">
+            📊 Dashboard Overview
+          </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card title="📅 Total Bookings" value={summary.totalBookings} />
-          <Card title="✅ Confirmed" value={summary.confirmedBookings} />
-          <Card title="🟠 Pending" value={summary.pendingBookings} />
-          <Card title="❌ Cancelled" value={summary.cancelledBookings} />
-          <Card title="📸 Photography" value={summary.photographyCount} />
-          <Card title="💬 Consultations" value={summary.consultationCount} />
-          <Card
-            title="💰 Total Payments"
-            value={`$${summary.totalPayments.toFixed(2)}`}
-          />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card title="📅 Total Bookings" value={summary.totalBookings} />
+            <Card title="✅ Confirmed" value={summary.confirmedBookings} />
+            <Card title="🟠 Pending" value={summary.pendingBookings} />
+            <Card title="❌ Cancelled" value={summary.cancelledBookings} />
+            <Card title="📸 Photography" value={summary.photographyCount} />
+            <Card title="💬 Consultations" value={summary.consultationCount} />
+            <Card
+              title="💰 Total Payments"
+              value={`$${summary.totalPayments.toFixed(2)}`}
+            />
+          </div>
 
-        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
-          📸 Bookings by Service
-        </h2>
+          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+            📸 Bookings by Service
+          </h2>
 
-        <div className="w-full h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={serviceData}
-              margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+          <div className="w-full h-96">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={serviceData}
+                margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="serviceName" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#6366F1" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+            🗓️ Upcoming Bookings
+          </h2>
+          <div className="mb-4 flex justify-end">
+            <select
+              value={bookingTypeFilter}
+              onChange={(e) =>
+                setBookingTypeFilter(
+                  e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+                )
+              }
+              className="border px-3 py-2 rounded-md shadow-sm"
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="serviceName" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#6366F1" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+              <option value="ALL">📋 All Bookings</option>
+              <option value="PHOTOGRAPHY">📸 Photography</option>
+              <option value="CONSULTATION">💬 Consultation</option>
+            </select>
+          </div>
 
-        <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
-          🗓️ Upcoming Bookings
-        </h2>
-        <div className="mb-4 flex justify-end">
-          <select
-            value={bookingTypeFilter}
-            onChange={(e) =>
-              setBookingTypeFilter(
-                e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
-              )
-            }
-            className="border px-3 py-2 rounded-md shadow-sm"
-          >
-            <option value="ALL">📋 All Bookings</option>
-            <option value="PHOTOGRAPHY">📸 Photography</option>
-            <option value="CONSULTATION">💬 Consultation</option>
-          </select>
-        </div>
-
-        <div className="h-[600px] bg-white p-4 rounded-xl shadow">
-          <Calendar
-            key={calendarKey}
-            localizer={localizer}
-            events={calendarEvents
-              .filter((e) =>
-                bookingTypeFilter === "ALL"
-                  ? true
-                  : e.bookingType === bookingTypeFilter
-              )
-              .map((e) => ({
-                ...e,
-                start: new Date(e.start),
-                end: new Date(e.end),
-              }))}
-            startAccessor="start"
-            endAccessor="end"
-            view={calendarView}
-            onView={(view) => {
-              if (view === "month" || view === "week") {
-                setCalendarView(view);
+          <div className="h-[600px] bg-white p-4 rounded-xl shadow">
+            <Calendar
+              key={calendarKey}
+              localizer={localizer}
+              events={calendarEvents
+                .filter((e) =>
+                  bookingTypeFilter === "ALL"
+                    ? true
+                    : e.bookingType === bookingTypeFilter
+                )
+                .map((e) => ({
+                  ...e,
+                  start: new Date(e.start),
+                  end: new Date(e.end),
+                }))}
+              startAccessor="start"
+              endAccessor="end"
+              view={calendarView}
+              onView={(view) => {
+                if (view === "month" || view === "week") {
+                  setCalendarView(view);
+                }
+              }}
+              date={currentDate}
+              onNavigate={(date, view, action) => {
+                if (action === "TODAY") {
+                  const now = new Date();
+                  setCurrentDate(now);
+                  setCalendarKey((prev) => prev + 1);
+                } else {
+                  setCurrentDate(date);
+                }
+              }}
+              defaultView="month"
+              views={["month", "week"]}
+              tooltipAccessor={(event) =>
+                `${event.title} - ${event.bookingType}`
               }
-            }}
-            date={currentDate}
-            onNavigate={(date, view, action) => {
-              if (action === "TODAY") {
-                const now = new Date();
-                setCurrentDate(now);
-                setCalendarKey((prev) => prev + 1);
-              } else {
-                setCurrentDate(date);
-              }
-            }}
-            defaultView="month"
-            views={["month", "week"]}
-            tooltipAccessor={(event) => `${event.title} - ${event.bookingType}`}
-            eventPropGetter={(event) => {
-              let bgColor = "#3b82f6";
-              if (event.status === "CONFIRMED") bgColor = "#10b981";
-              else if (event.status === "PENDING") bgColor = "#f59e0b";
-              else if (event.status === "CANCELLED") bgColor = "#ef4444";
-              return {
-                style: {
-                  backgroundColor: bgColor,
-                  color: "white",
-                  borderRadius: "6px",
-                  paddingLeft: "4px",
-                  paddingRight: "4px",
-                },
-              };
-            }}
-            onSelectEvent={(event) => setSelectedEvent(event)}
-            style={{ height: "100%" }}
-          />
+              eventPropGetter={(event) => {
+                let bgColor = "#3b82f6";
+                if (event.status === "CONFIRMED") bgColor = "#10b981";
+                else if (event.status === "PENDING") bgColor = "#f59e0b";
+                else if (event.status === "CANCELLED") bgColor = "#ef4444";
+                return {
+                  style: {
+                    backgroundColor: bgColor,
+                    color: "white",
+                    borderRadius: "6px",
+                    paddingLeft: "4px",
+                    paddingRight: "4px",
+                  },
+                };
+              }}
+              onSelectEvent={(event) => setSelectedEvent(event)}
+              style={{ height: "100%" }}
+            />
 
-          {selectedEvent && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
-              <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
-                <h2 className="text-xl font-bold mb-4">Booking Details</h2>
-                <p>
-                  <strong>📌 Type:</strong> {selectedEvent.bookingType}
-                </p>
-                <p>
-                  <strong>📅 Start:</strong>{" "}
-                  {new Date(selectedEvent.start).toLocaleString()}
-                </p>
-                <p>
-                  <strong>🕓 End:</strong>{" "}
-                  {new Date(selectedEvent.end).toLocaleString()}
-                </p>
-                <p>
-                  <strong>📌 Status:</strong> {selectedEvent.status}
-                </p>
-                <p>
-                  <strong>🧾 Title:</strong> {selectedEvent.title}
-                </p>
-                <div className="mt-6 text-right">
-                  <button
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                    onClick={() => setSelectedEvent(null)}
-                  >
-                    Close
-                  </button>
+            {selectedEvent && (
+              <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
+                  <h2 className="text-xl font-bold mb-4">Booking Details</h2>
+                  <p>
+                    <strong>📌 Type:</strong> {selectedEvent.bookingType}
+                  </p>
+                  <p>
+                    <strong>📅 Start:</strong>{" "}
+                    {new Date(selectedEvent.start).toLocaleString()}
+                  </p>
+                  <p>
+                    <strong>🕓 End:</strong>{" "}
+                    {new Date(selectedEvent.end).toLocaleString()}
+                  </p>
+                  <p>
+                    <strong>📌 Status:</strong> {selectedEvent.status}
+                  </p>
+                  <p>
+                    <strong>🧾 Title:</strong> {selectedEvent.title}
+                  </p>
+                  <div className="mt-6 text-right">
+                    <button
+                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      onClick={() => setSelectedEvent(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
     </AdminLayout>
