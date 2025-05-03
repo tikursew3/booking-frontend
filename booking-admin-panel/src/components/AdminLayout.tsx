@@ -13,7 +13,11 @@ export default function AdminLayout({ children }: Props) {
 
   const navItems = [
     { name: "Dashboard", href: "/index", icon: <Home size={20} /> },
-    { name: "Photography", href: "/services/photography", icon: <Camera size={20} /> },
+    {
+      name: "Photography",
+      href: "/services/photography",
+      icon: <Camera size={20} />,
+    },
     { name: "Decor", href: "/services/decor", icon: <Gift size={20} /> },
     { name: "Calendar", href: "/calendar", icon: <Calendar size={20} /> },
     { name: "Bookings", href: "/bookings", icon: <BookOpen size={20} /> },
@@ -39,7 +43,9 @@ export default function AdminLayout({ children }: Props) {
                 <Link
                   href={item.href}
                   className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 ${
-                    router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
+                    router.pathname === item.href
+                      ? "bg-gray-800 font-semibold"
+                      : ""
                   }`}
                   title={item.name} // native tooltip
                 >
@@ -49,22 +55,22 @@ export default function AdminLayout({ children }: Props) {
               </li>
             ))}
             <div className="px-2 mt-6 mb-4">
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
-            >
-              <LogOut size={20} />
-              <span className="hidden md:inline">Logout</span>
-            </button>
-          </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
+              >
+                <LogOut size={20} />
+                <span className="hidden md:inline">Logout</span>
+              </button>
+            </div>
           </ul>
-
-          
         </nav>
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-4 bg-gray-100 ml-20 md:ml-64 w-full">{children}</main>
+      <main className="flex-1 p-4 bg-gray-100 ml-20 md:ml-64 overflow-x-hidden">
+        <div className="w-full max-w-full sm:max-w-4xl mx-auto">{children}</div>
+      </main>
     </div>
   );
 }

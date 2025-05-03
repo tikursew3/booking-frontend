@@ -116,12 +116,12 @@ export default function Dashboard() {
   return (
     <AdminLayout>
       <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
-        <div className="max-w-full md:max-w-4xl mx-auto">
+        <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
           <h1 className="text-3xl font-bold mb-8 text-center">
             📊 Dashboard Overview
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full overflow-x-hidden">
             <Card title="📅 Total Bookings" value={summary.totalBookings} />
             <Card title="✅ Confirmed" value={summary.confirmedBookings} />
             <Card title="🟠 Pending" value={summary.pendingBookings} />
@@ -134,7 +134,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
             📸 Bookings by Service
           </h2>
 
@@ -153,10 +153,10 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
 
-          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center">
+          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
             🗓️ Upcoming Bookings
           </h2>
-          <div className="mb-4 flex justify-end">
+          <div className="mb-4 flex justify-end w-full max-w-full overflow-hidden">
             <select
               value={bookingTypeFilter}
               onChange={(e) =>
@@ -172,7 +172,7 @@ export default function Dashboard() {
             </select>
           </div>
 
-          <div className="h-[600px] bg-white p-4 rounded-xl shadow">
+          <div className="h-[600px] bg-white p-4 rounded-xl shadow w-full max-w-full overflow-hidden">
             <Calendar
               key={calendarKey}
               localizer={localizer}
@@ -230,7 +230,7 @@ export default function Dashboard() {
             />
 
             {selectedEvent && (
-              <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
+              <div className="w-full max-w-full overflow-hidden fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
                 <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
                   <h2 className="text-xl font-bold mb-4">Booking Details</h2>
                   <p>

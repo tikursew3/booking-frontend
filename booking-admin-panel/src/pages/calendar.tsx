@@ -68,7 +68,7 @@ export default function AdminCalendarPage() {
 
   return (
     <AdminLayout>
-      <main className="p-5 justify-center ">
+      <main className="p-5 justify-center items-center">
         <h1 className="text-2xl font-bold mb-6">📅 Booking Calendar</h1>
 
         {/* Filters */}
