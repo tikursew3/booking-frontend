@@ -15,8 +15,8 @@ export interface PhotographyService {
     name: string;
     description: string;
     pricePerDay: number;
-    imageUrl: string;
-    images: string[];
+    
+    imageUrls: string[];
     active: boolean;
   }
   

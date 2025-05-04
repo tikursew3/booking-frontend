@@ -59,7 +59,7 @@ export default function PhotographyCard({ service }: { service: PhotographyServi
     );
   }}
 >
-  {service.images.map((imgUrl: string, index: number) => (
+{(service.images?.length > 0 ? service.images : [service.imageUrl]).map((imgUrl: string, index: number) => (
     <div key={index}>
       <img
         src={imgUrl}

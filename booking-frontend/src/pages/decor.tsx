@@ -113,7 +113,7 @@ export default function DecorPage() {
             {filteredAndSortedItems.map((item: DecorItem) => (
               <div key={item.id} className="border rounded-2xl shadow hover:shadow-lg transition overflow-hidden bg-white">
                 <img
-                  src={item.imageUrl}
+                  src={item.imageUrls?.[0]}
                   alt={item.name}
                   className="w-full h-56 object-cover"
                 />
