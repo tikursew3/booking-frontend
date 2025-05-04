@@ -1,6 +1,6 @@
 import { PhotographyService } from "@/types/types";
 import { useState, useEffect } from "react";
-import CloudinaryImagePicker from "@/components/CloudinaryImagePicker"; // adjust path if needed
+import CloudinaryImagePicker from "@/components/CloudinaryImagePicker";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
 type Props = {
@@ -10,11 +10,10 @@ type Props = {
 };
 
 export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
-  
   const [formData, setFormData] = useState<Omit<PhotographyService, "id">>({
     name: "",
     description: "",
-    imageUrl: "",
+    imageUrls: [],
     price: 0,
     depositAmount: 0,
     duration: "1 hour",
@@ -25,8 +24,7 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
 
   useEffect(() => {
     if (initialData) {
-      const { ...rest } = initialData;
-      setFormData(rest);
+      setFormData(initialData);
     }
   }, [initialData]);
 
@@ -39,18 +37,24 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
   };
 
   const handleLocalImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files) return;
 
     try {
-      const uploadedUrl = await uploadToCloudinary(file);
-      setFormData((prev) => ({ ...prev, imageUrl: uploadedUrl }));
+      const uploaded: string[] = [];
+      for (const file of Array.from(files)) {
+        const url = await uploadToCloudinary(file);
+        uploaded.push(url);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, ...uploaded],
+      }));
     } catch (err) {
-      console.error("Local image upload failed:", err);
-      alert("Image upload failed. Please try again.");
+      console.error("Upload failed:", err);
+      alert("Upload failed. Please try again.");
     }
   };
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,9 +64,7 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
   return (
     <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-lg p-6 max-w-xl w-full relative">
-        <h2 className="text-xl font-bold mb-4">
-          {initialData ? "Edit Service" : "Add New Service"}
-        </h2>
+        <h2 className="text-xl font-bold mb-4">{initialData ? "Edit Service" : "Add New Service"}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -83,54 +85,56 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             required
           />
 
-           {/* 📁 Local Upload */}
-           <input
+          <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleLocalImageChange}
             className="w-full border px-4 py-2 rounded cursor-pointer"
           />
 
-          {/* ☁️ Cloudinary Picker Trigger */}
           <button
             type="button"
             onClick={() => setShowImagePicker(true)}
-            className="bg-gray-200 px-4 py-2 rounded"
+            className="bg-gray-200 px-4 py-2 rounded text-sm"
           >
             📷 Choose from Cloudinary
           </button>
 
-           {/* ☁️ Cloudinary Picker Modal */}
-           {showImagePicker && (
+          {showImagePicker && (
             <CloudinaryImagePicker
               onSelect={(url) => {
-                setFormData((prev) => ({ ...prev, imageUrl: url }));
+                setFormData((prev) => ({
+                  ...prev,
+                  imageUrls: [...prev.imageUrls, url],
+                }));
                 setShowImagePicker(false);
               }}
               onClose={() => setShowImagePicker(false)}
             />
           )}
-          {/* Preview + Remove */}
-          {formData.imageUrl && (
-            <div className="mt-2">
-              <img
-                src={formData.imageUrl}
-                alt="Selected"
-                className="w-24 rounded border"
-              />
 
-              <button
-                type="button"
-                onClick={() =>
-                  setFormData((prev) => ({ ...prev, imageUrl: "" }))
-                }
-                className="text-red-600 mt-1 text-sm underline"
-              >
-                Remove Image
-              </button>
+          {formData.imageUrls.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {formData.imageUrls.map((url, index) => (
+                <div key={index} className="relative">
+                  <img src={url} alt={`Image ${index}`} className="w-24 h-16 object-cover border rounded" />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        imageUrls: prev.imageUrls.filter((_, i) => i !== index),
+                      }))
+                    }
+                    className="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
           )}
-
 
           <input
             type="number"
@@ -154,7 +158,7 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             name="duration"
             value={formData.duration}
             onChange={handleChange}
-            placeholder="Duration (e.g., 1 hour)"
+            placeholder="Duration (e.g. 1 hour)"
             className="w-full border px-4 py-2 rounded"
             required
           />
@@ -163,10 +167,7 @@ export default function ServiceForm({ initialData, onSubmit, onClose }: Props) {
             <button type="button" onClick={onClose} className="text-gray-500 hover:underline">
               Cancel
             </button>
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-            >
+            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
               {initialData ? "Update" : "Add"}
             </button>
           </div>
