@@ -1,3 +1,5 @@
+// src/pages/admin/services/decor.tsx
+
 import { useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/AdminLayout";
 import api from "@/lib/axios";
@@ -5,7 +7,6 @@ import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import CloudinaryImagePicker from "@/components/CloudinaryImagePicker";
 
 import {
-  //useDecorItems,
   useAllDecorItems,
   useAddDecorItem,
   useUpdateDecorItem,
@@ -27,7 +28,7 @@ export default function DecorAdminPage() {
   const [formData, setFormData] = useState<Omit<DecorItem, "id">>({
     name: "",
     description: "",
-    imageUrl: "",
+    imageUrls: [],
     pricePerDay: 0,
     active: true,
   });
@@ -36,29 +37,30 @@ export default function DecorAdminPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
+    const newValue =
+      type === "checkbox"
+        ? (e.target as HTMLInputElement).checked
+        : name === "pricePerDay"
+        ? parseFloat(value)
+        : value;
 
-    if (type === "checkbox") {
-      const checked = (e.target as HTMLInputElement).checked; // Narrow to HTMLInputElement
-      setFormData((prev) => ({
-        ...prev,
-        [name]: checked,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: name === "pricePerDay" ? parseFloat(value) : value,
-      }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    //  handle the Cloudinary upload
     try {
-      const uploadedUrl = await uploadToCloudinary(file);
-      setFormData((prev) => ({ ...prev, imageUrl: uploadedUrl }));
+      const uploadedUrls: string[] = [];
+      for (const file of Array.from(files)) {
+        const url = await uploadToCloudinary(file);
+        uploadedUrls.push(url);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, ...uploadedUrls],
+      }));
     } catch (err) {
       console.error("Image upload failed:", err);
       alert("Image upload failed. Please try again.");
@@ -78,7 +80,7 @@ export default function DecorAdminPage() {
     setFormData({
       name: "",
       description: "",
-      imageUrl: "",
+      imageUrls: [],
       pricePerDay: 0,
       active: true,
     });
@@ -90,7 +92,7 @@ export default function DecorAdminPage() {
     setFormData({
       name: item.name,
       description: item.description,
-      imageUrl: item.imageUrl,
+      imageUrls: item.imageUrls ?? [],
       pricePerDay: item.pricePerDay,
       active: item.active,
     });
@@ -108,7 +110,6 @@ export default function DecorAdminPage() {
       await api.patch(`/api/decor-items/${item.id}/toggle-active`, {
         active: !item.active,
       });
-      // Refetch items
       queryClient.invalidateQueries({ queryKey: ["decor-items"] });
       queryClient.invalidateQueries({ queryKey: ["decor-items-all"] });
     } catch (err) {
@@ -128,7 +129,7 @@ export default function DecorAdminPage() {
                 setFormData({
                   name: "",
                   description: "",
-                  imageUrl: "",
+                  imageUrls: [],
                   pricePerDay: 0,
                   active: true,
                 });
@@ -141,112 +142,128 @@ export default function DecorAdminPage() {
           </div>
 
           {showForm && (
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
-            >
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full border px-4 py-2 rounded"
-                required
-              />
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={formData.description}
-                onChange={handleInputChange}
-                className="w-full border px-4 py-2 rounded"
-                required
-              />
-
-              <div className="space-y-2">
-                <label className="block font-medium">Image</label>
-
+            <>
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-10 space-y-4 max-w-xl w-full mx-auto overflow-y-auto max-h-[90vh]"
+              >
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="w-full border px-4 py-2 rounded cursor-pointer"
-                />
-
-                <button
-                  type="button"
-                  onClick={() => setShowImagePicker(true)}
-                  className="bg-gray-200 px-4 py-2 rounded text-sm"
-                >
-                  📷 Choose from Cloudinary
-                </button>
-
-                {formData.imageUrl && (
-                  <div className="mt-2">
-                    <img
-                      src={formData.imageUrl}
-                      alt="Preview"
-                      className="w-24 rounded border"
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, imageUrl: "" }))
-                      }
-                      className="text-red-600 mt-1 text-sm underline"
-                    >
-                      Remove Image
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <input
-                type="number"
-                name="pricePerDay"
-                placeholder="Price per day"
-                value={formData.pricePerDay}
-                onChange={handleInputChange}
-                className="w-full border px-4 py-2 rounded"
-                required
-              />
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="active"
-                  checked={formData.active}
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={formData.name}
                   onChange={handleInputChange}
+                  className="w-full border px-4 py-2 rounded"
+                  required
                 />
-                Active
-              </label>
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  className="w-full border px-4 py-2 rounded"
+                  required
+                />
 
-              <div className="flex justify-between items-center">
-                <button
-                  type="submit"
-                  className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl"
-                >
-                  {editingItem ? "Update Item" : "Add Item"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="text-gray-500 hover:underline"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-             
-          )}
-           {showImagePicker && (
+                <div className="space-y-2">
+                  <label className="block font-medium">Images</label>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageChange}
+                    className="w-full border px-4 py-2 rounded cursor-pointer"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowImagePicker(true)}
+                    className="bg-gray-200 px-4 py-2 rounded text-sm"
+                  >
+                    📷 Choose from Cloudinary
+                  </button>
+
+                  {formData.imageUrls.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.imageUrls.map((url, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={url}
+                            alt={`Image ${index}`}
+                            className="w-24 h-16 object-cover rounded border"
+                          />
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                imageUrls: prev.imageUrls.filter(
+                                  (_, i) => i !== index
+                                ),
+                              }))
+                            }
+                            className="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <input
+                  type="number"
+                  name="pricePerDay"
+                  placeholder="Price per day"
+                  value={formData.pricePerDay}
+                  onChange={handleInputChange}
+                  className="w-full border px-4 py-2 rounded"
+                  required
+                />
+
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="active"
+                    checked={formData.active}
+                    onChange={handleInputChange}
+                  />
+                  Active
+                </label>
+
+                <div className="flex justify-between items-center">
+                  <button
+                    type="submit"
+                    className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl"
+                  >
+                    {editingItem ? "Update Item" : "Add Item"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                    className="text-gray-500 hover:underline"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+
+              {showImagePicker && (
                 <CloudinaryImagePicker
                   onSelect={(url) => {
-                    setFormData((prev) => ({ ...prev, imageUrl: url }));
+                    setFormData((prev) => ({
+                      ...prev,
+                      imageUrls: [...prev.imageUrls, url],
+                    }));
                     setShowImagePicker(false);
                   }}
                   onClose={() => setShowImagePicker(false)}
                 />
               )}
+            </>
+          )}
 
           {isLoading && <p>Loading...</p>}
           {error && <p className="text-red-500">Failed to load decor items.</p>}
@@ -266,52 +283,48 @@ export default function DecorAdminPage() {
                 </thead>
                 <tbody>
                   {decorItems
-                    ?.slice() // create a shallow copy
-                    .sort((a, b) => a.id - b.id) // sort by ID for consistent order
-                    .map(
-                      (
-                        item //when you toggle active/inactive status, the item will stay in place
-                      ) => (
-                        <tr key={item.id} className="border-t">
-                          <td className="p-4">
+                    .slice()
+                    .sort((a, b) => a.id - b.id)
+                    .map((item) => (
+                      <tr key={item.id} className="border-t">
+                        <td className="p-4">
+                          {item.imageUrls?.[0] && (
                             <img
-                              src={item.imageUrl}
+                              src={item.imageUrls[0]}
                               alt={item.name}
                               className="w-20 h-14 object-cover rounded"
                             />
-                          </td>
-                          <td>{item.name}</td>
-                          <td className="max-w-xs truncate">
-                            {item.description}
-                          </td>
-                          <td>${item.pricePerDay.toFixed(2)}</td>
-                          <td>
-                            <button
-                              onClick={() => handleToggle(item)}
-                              className={`px-3 py-1 rounded ${
-                                item.active ? "bg-green-600" : "bg-gray-400"
-                              } text-white`}
-                            >
-                              {item.active ? "Active" : "Inactive"}
-                            </button>
-                          </td>
-                          <td className="text-right space-x-2 pr-4">
-                            <button
-                              onClick={() => handleEdit(item)}
-                              className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1  px-3 rounded"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDelete(item.id)}
-                              className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      )
-                    )}
+                          )}
+                        </td>
+                        <td>{item.name}</td>
+                        <td className="max-w-xs truncate">{item.description}</td>
+                        <td>${item.pricePerDay.toFixed(2)}</td>
+                        <td>
+                          <button
+                            onClick={() => handleToggle(item)}
+                            className={`px-3 py-1 rounded ${
+                              item.active ? "bg-green-600" : "bg-gray-400"
+                            } text-white`}
+                          >
+                            {item.active ? "Active" : "Inactive"}
+                          </button>
+                        </td>
+                        <td className="text-right space-x-2 pr-4">
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="bg-yellow-500 hover:bg-yellow-600 text-white pb-1 px-3 rounded"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            className="bg-red-600 hover:bg-red-700 text-white pb-1 px-3 rounded"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

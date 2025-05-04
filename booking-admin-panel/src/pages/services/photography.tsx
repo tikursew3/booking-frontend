@@ -11,14 +11,16 @@ import { useState } from "react";
 export default function PhotographyServicesPage() {
   const { data: services, isLoading, error } = useServices();
   const queryClient = useQueryClient();
+
   const [showForm, setShowForm] = useState(false);
   const [showImagePicker, setShowImagePicker] = useState(false);
-  const [editingService, setEditingService] = useState<PhotographyService | null>(null);
+  const [editingService, setEditingService] =
+    useState<PhotographyService | null>(null);
 
   const [formData, setFormData] = useState<Omit<PhotographyService, "id">>({
     name: "",
     description: "",
-    imageUrl: "",
+    imageUrls: [],
     price: 0,
     depositAmount: 0,
     duration: "",
@@ -40,12 +42,19 @@ export default function PhotographyServicesPage() {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     try {
-      const uploadedUrl = await uploadToCloudinary(file);
-      setFormData((prev) => ({ ...prev, imageUrl: uploadedUrl }));
+      const uploadedUrls: string[] = [];
+      for (const file of Array.from(files)) {
+        const url = await uploadToCloudinary(file);
+        uploadedUrls.push(url);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, ...uploadedUrls],
+      }));
     } catch (err) {
       console.error("Image upload failed:", err);
       alert("Image upload failed. Please try again.");
@@ -66,7 +75,7 @@ export default function PhotographyServicesPage() {
       setFormData({
         name: "",
         description: "",
-        imageUrl: "",
+        imageUrls: [],
         price: 0,
         depositAmount: 0,
         duration: "",
@@ -84,7 +93,7 @@ export default function PhotographyServicesPage() {
     setFormData({
       name: service.name,
       description: service.description,
-      imageUrl: service.imageUrl,
+      imageUrls: service.imageUrls || [],
       price: service.price,
       depositAmount: service.depositAmount,
       duration: service.duration,
@@ -127,7 +136,7 @@ export default function PhotographyServicesPage() {
                 setFormData({
                   name: "",
                   description: "",
-                  imageUrl: "",
+                  imageUrls: [],
                   price: 0,
                   depositAmount: 0,
                   duration: "",
@@ -166,11 +175,12 @@ export default function PhotographyServicesPage() {
                 />
 
                 <div className="space-y-2">
-                  <label className="block font-medium">Image</label>
+                  <label className="block font-medium">Images</label>
 
                   <input
                     type="file"
                     accept="image/*"
+                    multiple
                     onChange={handleImageChange}
                     className="w-full border px-4 py-2 rounded cursor-pointer"
                   />
@@ -183,22 +193,29 @@ export default function PhotographyServicesPage() {
                     📷 Choose from Cloudinary
                   </button>
 
-                  {formData.imageUrl && (
-                    <div className="mt-2">
-                      <img
-                        src={formData.imageUrl}
-                        alt="Preview"
-                        className="w-24 rounded border"
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setFormData((prev) => ({ ...prev, imageUrl: "" }))
-                        }
-                        className="text-red-600 mt-1 text-sm underline"
-                      >
-                        Remove Image
-                      </button>
+                  {formData.imageUrls.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.imageUrls.map((url, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={url}
+                            alt={`Selected ${index}`}
+                            className="w-24 h-16 object-cover rounded border"
+                          />
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                imageUrls: prev.imageUrls.filter((_, i) => i !== index),
+                              }))
+                            }
+                            className="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -260,7 +277,10 @@ export default function PhotographyServicesPage() {
               {showImagePicker && (
                 <CloudinaryImagePicker
                   onSelect={(url) => {
-                    setFormData((prev) => ({ ...prev, imageUrl: url }));
+                    setFormData((prev) => ({
+                      ...prev,
+                      imageUrls: [...prev.imageUrls, url],
+                    }));
                     setShowImagePicker(false);
                   }}
                   onClose={() => setShowImagePicker(false)}
@@ -273,54 +293,62 @@ export default function PhotographyServicesPage() {
           {error && <p className="text-red-500">Failed to load services</p>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services?.slice().sort((a, b) => a.id - b.id).map((service) => (
-              <div
-                key={service.id}
-                className="bg-white border rounded-xl shadow p-4 flex flex-col justify-between"
-              >
-                <div>
-                  <img
-                    src={service.imageUrl}
-                    alt={service.name}
-                    className="w-full h-48 object-cover rounded-md mb-4"
-                  />
-                  <h2 className="text-xl font-semibold">{service.name}</h2>
-                  <p className="text-gray-600 text-sm mt-1">{service.description}</p>
-                  <p className="mt-2 text-sm text-gray-500">
-                    💲${service.price.toFixed(2)} | 💰 Deposit: ${service.depositAmount.toFixed(2)}
-                  </p>
-                  <p className="text-sm text-gray-500">⏱ {service.duration}</p>
-                  <p
-                    className={`mt-2 text-sm font-semibold ${
-                      service.active ? "text-green-600" : "text-red-500"
-                    }`}
-                  >
-                    {service.active ? "✅ Active" : "🚫 Disabled"}
-                  </p>
-                </div>
+            {services
+              ?.slice()
+              .sort((a, b) => a.id - b.id)
+              .map((service) => (
+                <div
+                  key={service.id}
+                  className="bg-white border rounded-xl shadow p-4 flex flex-col justify-between"
+                >
+                  <div>
+                    {service.imageUrls?.length > 0 && (
+                      <img
+                        src={service.imageUrls[0]}
+                        alt={service.name}
+                        className="w-full h-48 object-cover rounded-md mb-4"
+                      />
+                    )}
+                    <h2 className="text-xl font-semibold">{service.name}</h2>
+                    <p className="text-gray-600 text-sm mt-1">
+                      {service.description}
+                    </p>
+                    <p className="mt-2 text-sm text-gray-500">
+                      💲${service.price.toFixed(2)} | 💰 Deposit: $
+                      {service.depositAmount.toFixed(2)}
+                    </p>
+                    <p className="text-sm text-gray-500">⏱ {service.duration}</p>
+                    <p
+                      className={`mt-2 text-sm font-semibold ${
+                        service.active ? "text-green-600" : "text-red-500"
+                      }`}
+                    >
+                      {service.active ? "✅ Active" : "🚫 Disabled"}
+                    </p>
+                  </div>
 
-                <div className="flex flex-wrap justify-between mt-4 gap-2">
-                  <button
-                    onClick={() => handleEdit(service)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(service.id)}
-                    className="text-red-600 hover:underline"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => handleToggle(service)}
-                    className="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                  >
-                    {service.active ? "Deactivate" : "Activate"}
-                  </button>
+                  <div className="flex flex-wrap justify-between mt-4 gap-2">
+                    <button
+                      onClick={() => handleEdit(service)}
+                      className="text-blue-600 hover:underline"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(service.id)}
+                      className="text-red-600 hover:underline"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => handleToggle(service)}
+                      className="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                    >
+                      {service.active ? "Deactivate" : "Activate"}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </main>

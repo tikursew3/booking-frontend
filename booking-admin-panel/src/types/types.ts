@@ -46,7 +46,7 @@ export interface PhotographyService {
   id: number;
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrls: string[];
   price: number;
   depositAmount: number;
   duration: string;
@@ -57,7 +57,7 @@ export interface DecorItem {
   id: number;
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrls: string[];
   pricePerDay: number;
   active: boolean;
 }
