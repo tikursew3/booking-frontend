@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/AdminLayout";
 import api from "@/lib/axios";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
+import CloudinaryImagePicker from "@/components/CloudinaryImagePicker";
 
 import {
   //useDecorItems,
@@ -21,6 +22,7 @@ export default function DecorAdminPage() {
   const queryClient = useQueryClient();
 
   const [showForm, setShowForm] = useState(false);
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const [editingItem, setEditingItem] = useState<DecorItem | null>(null);
   const [formData, setFormData] = useState<Omit<DecorItem, "id">>({
     name: "",
@@ -160,32 +162,45 @@ export default function DecorAdminPage() {
                 className="w-full border px-4 py-2 rounded"
                 required
               />
-              <input
-                type="file"
-                accept="image/*"
-                placeholder="Image URL"
-                onChange={handleImageChange}
-                className="w-full border px-4 py-2 rounded cursor-pointer"
-                
-              />
-              {formData.imageUrl && (
-                <div className="mt-2">
-                  <img
-                    src={formData.imageUrl}
-                    alt="Preview"
-                    className="w-24 rounded border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({ ...prev, imageUrl: "" }))
-                    }
-                    className="text-red-600 mt-1 text-sm underline"
-                  >
-                    Remove Image
-                  </button>
-                </div>
-              )}
+
+              <div className="space-y-2">
+                <label className="block font-medium">Image</label>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full border px-4 py-2 rounded cursor-pointer"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowImagePicker(true)}
+                  className="bg-gray-200 px-4 py-2 rounded text-sm"
+                >
+                  📷 Choose from Cloudinary
+                </button>
+
+                {formData.imageUrl && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.imageUrl}
+                      alt="Preview"
+                      className="w-24 rounded border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData((prev) => ({ ...prev, imageUrl: "" }))
+                      }
+                      className="text-red-600 mt-1 text-sm underline"
+                    >
+                      Remove Image
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <input
                 type="number"
                 name="pricePerDay"
@@ -221,7 +236,17 @@ export default function DecorAdminPage() {
                 </button>
               </div>
             </form>
+             
           )}
+           {showImagePicker && (
+                <CloudinaryImagePicker
+                  onSelect={(url) => {
+                    setFormData((prev) => ({ ...prev, imageUrl: url }));
+                    setShowImagePicker(false);
+                  }}
+                  onClose={() => setShowImagePicker(false)}
+                />
+              )}
 
           {isLoading && <p>Loading...</p>}
           {error && <p className="text-red-500">Failed to load decor items.</p>}

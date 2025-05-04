@@ -3,7 +3,7 @@ import axios from "axios";
 type CloudinaryUploadResponse = {
     secure_url: string;
     public_id: string;
-    // You can add more fields if needed
+    
   };
 
 export const uploadToCloudinary = async (file: File): Promise<string> => {
