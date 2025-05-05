@@ -21,9 +21,9 @@ export default function Hero() {
       
       
 
-      {/* Text content */}
+      {/* Main content */}
       
-      <div className="relative z-20 flex flex-col items-center justify-center text-center h-full px-4">
+      <div className="relative z-20 flex flex-col items-center justify-center text-center h-full px-4 pt-32">
       
         <h1 className="text-4xl  md:text-5xl font-bold mb-4 text-white">
           We Capture. We Create.
