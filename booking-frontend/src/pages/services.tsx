@@ -45,7 +45,7 @@ export default function ServicesPage() {
               className="bg-white shadow-md rounded-xl overflow-hidden"
             >
               <img
-                src={service.images?.[0] || "/placeholder.jpg"}
+                src={service.imageUrls?.[0] || "/placeholder.jpg"}
                 alt={service.name}
                 className="h-56 w-full object-cover"
               />

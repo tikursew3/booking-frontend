@@ -5,7 +5,7 @@ export interface PhotographyService {
     price: number;
     depositAmount: number;
     duration: string;
-    images: string[];
+    imageUrls: string[];
     active: boolean;
   }
 

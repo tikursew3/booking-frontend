@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { PhotographyService } from '@/types/types';
 
 export default function PhotographyCard({ service }: { service: PhotographyService }) {
-  const imagesToShow = service.images ?? [];
+  const imagesToShow = service.imageUrls ?? [];
 
   return (
     <motion.div
