@@ -30,7 +30,7 @@ export default function Hero() {
       </div>
 
       {/* Scrollable Buttons */}
-      <div className="absolute bottom-10 left-0 right-0 flex justify-between px-8 z-30">
+      <div className="absolute top-20 left-0 right-0 flex justify-between px-8 z-30">
         <Link
           href="/photography"
           className="bg-[#232b6e] hover:bg-blue-700 text-white py-3 px-6 rounded-2xl text-lg shadow-lg transition transform hover:scale-105"
