@@ -16,10 +16,9 @@ export default function Header() {
  
   return (
     
-    <header className="fixed top-0 left-0 w-full z-50 h-16 bg-white/30 backdrop-blur-md supports-[backdrop-filter]:bg-white/20 shadow-md">
-
-
-
+    
+<header className="w-full z-50 bg-white/30 backdrop-blur-md supports-[backdrop-filter]:bg-white/20 shadow-md">
+{/* <header className="fixed top-0 left-0 w-full z-50 h-16 bg-white/30 backdrop-blur-md supports-[backdrop-filter]:bg-white/20 shadow-md"> */}
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="text-2xl font-extrabold text-[#F9F79F] tracking-tight">
           Eden Photo and Decor
