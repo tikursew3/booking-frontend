@@ -30,8 +30,6 @@ export default function DecorPage() {
   }, [decorItems, searchQuery, sortBy, sortOrder]);
 
 
-
-
   return (
     <Layout headerType="alternate">
       {/* Hero Section */}
