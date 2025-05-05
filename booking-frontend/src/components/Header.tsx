@@ -54,7 +54,7 @@ export default function Header() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="md:hidden bg-[#a18132]/70 backdrop-blur-sm px-4 py-4 shadow rounded-b-2xl">
-          <ul className="flex flex-col space-y-4 text-[#333333]  font-bold text-lg">
+          <ul className="flex flex-col space-y-4 font-bold text-lg">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
