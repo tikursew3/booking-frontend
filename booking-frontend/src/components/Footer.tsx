@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* A Glimpse of Our Services */}
         <div>
-          <h3 className="text-lg md:text-xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 w-full md:w-fit">
+          <h3 className="text-lg md:text-xl font-bold text-white border-b-2 border-gray-300 pb-2 w-full md:w-fit">
             📸 A Glimpse Of Our Services
           </h3>
           <ul className="space-y-2 text-sm">
@@ -19,7 +19,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg md:text-xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 w-full md:w-fit">
+          <h3 className="text-lg md:text-xl font-bold text-white border-b-2 border-gray-300 pb-2 w-full md:w-fit">
             🔗 Quick Links
           </h3>
           <ul className="space-y-2 text-sm">
@@ -56,7 +56,7 @@ export default function Footer() {
 
         {/* Get In Touch */}
         <div>
-          <h3 className="text-lg md:text-xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 w-full md:w-fit">
+          <h3 className="text-lg md:text-xl font-bold text-white border-b-2 border-gray-300 pb-2 w-full md:w-fit">
             📬 Get In Touch
           </h3>
           <p className="text-sm">
@@ -83,7 +83,7 @@ export default function Footer() {
 
         {/* Operational Hours + Location */}
         <div>
-          <h3 className="text-lg md:text-xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 w-full md:w-fit">
+          <h3 className="text-lg md:text-xl font-bold text-white border-b-2 border-gray-300 pb-2 w-full md:w-fit">
             ⏰ Hours & Location
           </h3>
           <p className="text-sm">Mon - Fri: 9:00 AM - 6:00 PM</p>
@@ -100,7 +100,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="text-center text-sm text-gray-500 mt-10">
+      <div className="text-center text-sm text-white mt-10">
         © {new Date().getFullYear()} Your Business Name. All rights reserved.
       </div>
     </footer>
