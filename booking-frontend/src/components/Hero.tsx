@@ -36,7 +36,7 @@ export default function Hero() {
       {/* Fixed left button */}
       <Link
         href="/photography"
-        className="fixed top-20 left-20 bg-[#232b6e] hover:bg-blue-700 text-white py-3 px-6 rounded-2xl text-lg shadow-lg transition transform hover:scale-105 z-30"
+        className="top-20 left-20 bg-[#232b6e] hover:bg-blue-700 text-white py-3 px-6 rounded-2xl text-lg shadow-lg transition transform hover:scale-105 z-30"
       >
         Photography
       </Link>
@@ -44,7 +44,7 @@ export default function Hero() {
       {/* Fixed right button */}
       <Link
         href="/decor"
-        className="fixed top-20 right-20 bg-[#99b50e] hover:bg-yellow-600 text-white py-3 px-6 rounded-2xl text-2lg shadow-lg transition transform hover:scale-105 z-30"
+        className="top-20 right-20 bg-[#99b50e] hover:bg-yellow-600 text-white py-3 px-6 rounded-2xl text-2lg shadow-lg transition transform hover:scale-105 z-30"
       >
         Decor
       </Link>
