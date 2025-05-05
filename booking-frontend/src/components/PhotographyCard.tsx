@@ -5,6 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { PhotographyService } from '@/types/types';
 
 export default function PhotographyCard({ service }: { service: PhotographyService }) {
+  const imagesToShow = service.images ?? [];
   return (
     <motion.div
     whileHover={{ scale: 1.03 }}
@@ -59,15 +60,15 @@ export default function PhotographyCard({ service }: { service: PhotographyServi
     );
   }}
 >
-{(service.images?.length > 0 ? service.images : [service.imageUrl]).map((imgUrl: string, index: number) => (
-    <div key={index}>
-      <img
-        src={imgUrl}
-        alt={`${service.name} ${index + 1}`}
-        className="h-100 object-cover w-full"
-      />
-    </div>
-  ))}
+{imagesToShow.map((imgUrl, index) => (
+            <div key={index}>
+              <img
+                src={imgUrl}
+                alt={`${service.name} ${index + 1}`}
+                className="h-100 object-cover w-full"
+              />
+            </div>
+          ))}
 </Carousel>
 
     </div>

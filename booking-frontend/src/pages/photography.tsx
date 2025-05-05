@@ -33,8 +33,7 @@ export default function Photography() {
                 ease: "easeOut",
               }}
             >
-              <PhotographyCard service={{...service, imageUrl: service.images?.[0] || "",
-                images: service.images || []
+              <PhotographyCard service={{...service, images: service.images || []
               }} />
             </motion.div>
           ))}
