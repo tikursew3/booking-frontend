@@ -130,7 +130,7 @@ export default function Booking() {
         router.push("/consultation-success");
       } else {
         const bookingId = bookingRes.data.id;
-        const depositAmount = bookingRes.data.depositAmount || 50;
+        const depositAmount = bookingRes.data.depositAmount;
   
         const stripeRes = await api.post("/api/stripe/create-checkout-session", null, {
           params: { bookingId, amount: depositAmount },

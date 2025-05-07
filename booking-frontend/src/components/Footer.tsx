@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Facebook, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -42,7 +43,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:underline text-green-400">
+              <Link href="/contact-us/contact" className="hover:underline text-green-400">
                 Contact Us
               </Link>
             </li>
@@ -65,7 +66,7 @@ export default function Footer() {
               href="mailto:info@yourbusiness.com"
               className="text-blue-400 hover:underline"
             >
-              info@yourbusiness.com
+              info@mybusiness.com
             </a>
           </p>
           <p className="text-lg">
@@ -76,8 +77,12 @@ export default function Footer() {
           </p>
           <p className="text-lg mt-2">
             Follow us on:
-            <span className="ml-2 text-blue-400">Instagram</span>,{" "}
-            <span className="text-blue-400">Facebook</span>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <Facebook className="w-30 h-15 text-white hover:text-blue-900 transition" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <Instagram className="w-30 h-15 text-white hover:text-blue-900 transition" />
+              </a>
           </p>
         </div>
 
@@ -90,7 +95,7 @@ export default function Footer() {
           <p className="text-lg">Sat: 10:00 AM - 4:00 PM</p>
           <p className="text-lg mb-4">Sun: Closed</p>
           <iframe
-            src="https://www.google.com/maps/embed?pb=PASTE_YOUR_GOOGLE_MAP_EMBED_LINK_HERE"
+            src="https://www.google.com/maps/embed?pb=PASTE_THE_GOOGLE_MAP_EMBED_LINK_HERE"
             width="100%"
             height="120"
             className="rounded border-none"
@@ -101,7 +106,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center text-lg text-white mt-10">
-        © {new Date().getFullYear()} Your Business Name. All rights reserved.
+        © {new Date().getFullYear()} Business Name. All rights reserved.
       </div>
     </footer>
   );
