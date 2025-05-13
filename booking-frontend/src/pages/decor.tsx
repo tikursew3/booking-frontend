@@ -107,13 +107,13 @@ export default function DecorPage() {
         {error && <p className="text-red-500 text-center">Failed to load decor items.</p>}
 
         {filteredAndSortedItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8">
             {filteredAndSortedItems.map((item: DecorItem) => (
               <div key={item.id} className="border rounded-2xl shadow hover:shadow-lg transition overflow-hidden bg-white">
                 <img
                   src={item.imageUrls?.[0] || "/fallback.jpg"}
                   alt={item.name}
-                  className="w-full h-56 object-cover"
+                  className="w-full h-50 object-cover"
                 />
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-2">{item.name}</h3>
