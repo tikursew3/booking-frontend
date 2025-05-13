@@ -113,7 +113,7 @@ export default function DecorPage() {
                 <img
                   src={item.imageUrls?.[0] || "/fallback.jpg"}
                   alt={item.name}
-                  className="w-full h-50 object-cover"
+                  className="w-full h-60 object-cover"
                 />
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-2">{item.name}</h3>

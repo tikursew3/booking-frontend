@@ -76,8 +76,7 @@ const AboutPage = () => {
             </section>
           </div>
         </div>
-      </div>
-      {/* Quick Links Section */}
+        {/* Quick Links Section */}
       <div className="mt-10 text-center">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
           Quick Links
@@ -114,6 +113,8 @@ const AboutPage = () => {
           </Link>
         </div>
       </div>
+      </div>
+      
     </Layout>
   );
 };
