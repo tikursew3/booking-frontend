@@ -78,7 +78,7 @@ const AboutPage = () => {
         </div>
       </div>
       {/* Quick Links Section */}
-      <div className="mt-16 text-center">
+      <div className="mt-10 text-center">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
           Quick Links
         </h3>
