@@ -1,7 +1,9 @@
 import React from "react";
+import Layout from "@/components/Layout";
 
 const AboutPage = () => {
   return (
+    <Layout headerType="alternate">
     <div className="max-w-5xl mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold mb-6 text-center">About Us</h1>
       
@@ -50,6 +52,7 @@ const AboutPage = () => {
         </section>
       </div>
     </div>
+    </Layout>
   );
 };
 
