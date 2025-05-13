@@ -7,7 +7,7 @@ const AboutPage = () => {
     <Layout headerType="alternate">
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 py-12 px-4 font-sans">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-5xl font-extrabold text-center text-indigo-700 mb-4 pt-3 font-serif">
+          <h1 className="text-5xl font-extrabold text-center text-indigo-700 mb-4 pt-4 font-serif">
             About Us
           </h1>
           <p className="text-xl text-center text-gray-700 mb-12">
