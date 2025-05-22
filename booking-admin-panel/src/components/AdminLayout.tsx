@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { adminLogout } from "@/pages/api/adminAuth";
-import { Home, Camera, Gift, Calendar, BookOpen, LogOut } from "lucide-react"; // Example icons
+import { Home, Camera, Gift, Calendar, BookOpen, LogOut } from "lucide-react";
 
 type Props = {
   children: ReactNode;
@@ -29,8 +29,8 @@ export default function AdminLayout({ children }: Props) {
   };
 
   return (
-     <div className="min-h-screen flex text-black dark:text-white overflow-x-auto">
-      {/* Responsive Sidebar: shrinks on mobile */}
+    <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
+      {/* Sidebar (permanently dark) */}
       <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-900 text-white flex-shrink-0 h-screen z-40">
         <div className="px-4 py-6 text-center border-b border-gray-800">
           <h2 className="text-sm md:text-xl font-bold">Admin</h2>
@@ -43,9 +43,7 @@ export default function AdminLayout({ children }: Props) {
                 <Link
                   href={item.href}
                   className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 transition ${
-                    router.pathname === item.href
-                      ? "bg-gray-800 font-semibold"
-                      : ""
+                    router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
                   }`}
                   title={item.name}
                 >
@@ -68,7 +66,7 @@ export default function AdminLayout({ children }: Props) {
       </aside>
 
       {/* Main Content */}
-      <main className="w-full flex-1 ml-20 md:ml-64 overflow-x-hidden">
+      <main className="w-full flex-1 bg-gray-100 dark:bg-gray-800 ml-20 md:ml-64 overflow-x-hidden">
         <div className="w-full">{children}</div>
       </main>
     </div>
