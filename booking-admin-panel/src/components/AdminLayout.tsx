@@ -31,9 +31,9 @@ export default function AdminLayout({ children }: Props) {
   return (
     <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
       {/* Sidebar (permanently dark) */}
-      <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-900 text-white flex-shrink-0 h-screen z-40">
-        <div className="px-4 py-6 text-center border-b border-gray-800">
-          <h2 className="text-sm md:text-xl font-bold">Admin</h2>
+      <aside className="fixed top-0 left-0 w-20 md:w-64 bg-[#111827] text-white flex-shrink-0 h-screen z-40">
+        <div className="px-4 py-6 text-center border-b border-[#1F2937]">
+          <h2 className="text-sm md:text-xl font-bold text-white">Admin</h2>
         </div>
 
         <nav className="flex flex-col justify-between h-full">
@@ -42,8 +42,10 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 transition ${
-                    router.pathname === item.href ? "bg-gray-800 font-semibold" : ""
+                  className={`flex items-center gap-2 px-3 py-2 rounded transition text-white hover:bg-[#1f2937] ${
+                    router.pathname === item.href
+                      ? "bg-[#1f2937] font-semibold"
+                      : ""
                   }`}
                   title={item.name}
                 >
