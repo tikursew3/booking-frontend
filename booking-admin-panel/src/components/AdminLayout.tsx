@@ -29,10 +29,10 @@ export default function AdminLayout({ children }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex bg-white text-black overflow-x-auto">
+     <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
       {/* Responsive Sidebar: shrinks on mobile */}
-      <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-800 text-white flex-shrink-0 h-screen z-40">
-        <div className="px-4 py-6 text-center border-b border-gray-700">
+      <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-800 dark:bg-gray-950 text-white flex-shrink-0 h-screen z-40">
+        <div className="px-4 py-6 text-center border-b border-gray-700 dark:border-gray-800">
           <h2 className="text-sm md:text-xl font-bold">Admin</h2>
         </div>
 
@@ -42,12 +42,12 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-800 transition ${
                     router.pathname === item.href
-                      ? "bg-gray-800 font-semibold"
+                      ? "bg-gray-800 dark:bg-gray-900 font-semibold"
                       : ""
                   }`}
-                  title={item.name} // native tooltip
+                  title={item.name}
                 >
                   {item.icon}
                   <span className="hidden md:inline">{item.name}</span>
@@ -57,7 +57,7 @@ export default function AdminLayout({ children }: Props) {
             <div className="px-2 mt-6 mb-4">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold"
+                className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold transition"
               >
                 <LogOut size={20} />
                 <span className="hidden md:inline">Logout</span>
@@ -67,8 +67,8 @@ export default function AdminLayout({ children }: Props) {
         </nav>
       </aside>
 
-      {/* Main content */}
-      <main className="w-full flex-1 bg-gray-100 ml-20 md:ml-64 overflow-x-hidden">
+      {/* Main Content */}
+      <main className="w-full flex-1 bg-gray-100 dark:bg-gray-800 ml-20 md:ml-64 overflow-x-hidden">
         <div className="w-full">{children}</div>
       </main>
     </div>

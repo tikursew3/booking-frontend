@@ -270,9 +270,15 @@ export default function Dashboard() {
 
 function Card({ title, value }: { title: string; value: string | number }) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
-      <h2 className="text-xl font-semibold text-gray-700 mb-2">{title}</h2>
-      <p className="text-3xl font-bold text-blue-600">{value}</p>
+    <div className="bg-gradient-to-br from-white to-blue-50 border border-blue-100 rounded-2xl shadow-md p-6 text-center transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl group">
+      <div className="mb-2 text-4xl group-hover:scale-110 transition-transform duration-300">
+        {title.slice(0, 2)}
+      </div>
+      <h2 className="text-base sm:text-lg font-medium text-gray-600 mb-1">
+        {title.slice(2).trim()}
+      </h2>
+      <p className="text-2xl sm:text-3xl font-bold text-blue-700">{value}</p>
     </div>
   );
 }
+
