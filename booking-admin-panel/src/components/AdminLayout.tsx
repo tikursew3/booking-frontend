@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: Props) {
      <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
       {/* Responsive Sidebar: shrinks on mobile */}
       <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-900 text-white flex-shrink-0 h-screen z-40">
-        <div className="px-4 py-6 text-center border-b border-gray-700">
+        <div className="px-4 py-6 text-center border-b border-gray-800">
           <h2 className="text-sm md:text-xl font-bold">Admin</h2>
         </div>
 
@@ -42,9 +42,9 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-800 transition ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700 transition ${
                     router.pathname === item.href
-                      ? "bg-gray-800 dark:bg-gray-900 font-semibold"
+                      ? "bg-gray-800 font-semibold"
                       : ""
                   }`}
                   title={item.name}
