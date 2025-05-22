@@ -29,7 +29,7 @@ export default function AdminLayout({ children }: Props) {
   };
 
   return (
-     <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
+     <div className="min-h-screen flex bg-gray-700 text-white dark:bg-gray-900 dark:text-white overflow-x-auto">
       {/* Responsive Sidebar: shrinks on mobile */}
       <aside className="fixed top-0 left-0 w-20 md:w-64 bg-gray-800 dark:bg-gray-950 text-white flex-shrink-0 h-screen z-40">
         <div className="px-4 py-6 text-center border-b border-gray-700 dark:border-gray-800">
