@@ -12,19 +12,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  html, body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  a, p, h1, h2, h3, h4, h5, h6, button, input, textarea {
-    color: #000000 !important;
-    background-color: #ffffff !important;
-    border-color: #cccccc !important;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
