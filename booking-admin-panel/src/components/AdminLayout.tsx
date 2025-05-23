@@ -31,7 +31,7 @@ export default function AdminLayout({ children }: Props) {
   return (
     <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-auto">
       {/* Sidebar (permanently dark) */}
-      <aside className="fixed top-0 left-0 w-20 md:w-64 bg-[#111827] text-white flex-shrink-0 h-screen z-40">
+      <aside className="fixed top-0 left-0 w-20 md:w-64 h-screen z-40 flex-shrink-0 bg-[#111827] text-white">
         <div className="px-4 py-6 text-center border-b border-[#1F2937]">
           <h2 className="text-sm md:text-xl font-bold text-white">Admin</h2>
         </div>
@@ -42,12 +42,11 @@ export default function AdminLayout({ children }: Props) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded transition text-white hover:bg-[#1f2937] ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded transition text-white hover:bg-[#1F2937] ${
                     router.pathname === item.href
-                      ? "bg-[#1f2937] font-semibold"
+                      ? "bg-[#1F2937] font-semibold"
                       : ""
                   }`}
-                  title={item.name}
                 >
                   {item.icon}
                   <span className="hidden md:inline">{item.name}</span>
@@ -57,7 +56,7 @@ export default function AdminLayout({ children }: Props) {
             <div className="px-2 mt-6 mb-4">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-red-600 hover:bg-red-700 text-white font-semibold transition"
+                className="flex items-center gap-2 w-full px-3 py-2 text-left rounded bg-[#DC2626] hover:bg-[#B91C1C] text-white font-semibold transition"
               >
                 <LogOut size={20} />
                 <span className="hidden md:inline">Logout</span>
