@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: Props) {
       </aside>
 
       {/* Main Content */}
-      <main className="w-full flex-1 bg-gray-100 ml-20 md:ml-64 overflow-x-hidden">
+      <main className="text-[#47545c] w-full flex-1 bg-gray-100 ml-20 md:ml-64 overflow-x-hidden">
         <div className="w-full">{children}</div>
       </main>
     </div>

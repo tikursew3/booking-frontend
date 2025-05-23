@@ -117,7 +117,7 @@ export default function Dashboard() {
     <AdminLayout>
       <main className="flex-1 p-4 bg-gray-100 overflow-x-hidden">
         <div className="w-full max-w-full md:max-w-4xl mx-auto overflow-x-hidden">
-          <h1 className="text-3xl font-bold mb-8 text-center">
+          <h1 className="text-[#47545c] text-3xl font-bold mb-8 text-center">
             📊 Dashboard Overview
           </h1>
 
@@ -134,7 +134,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
+          <h2 className="text-[#47545c] text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
             📸 Bookings by Service
           </h2>
 
@@ -153,10 +153,10 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
 
-          <h2 className="text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
+          <h2 className="text-[#47545c] text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
             🗓️ Upcoming Bookings
           </h2>
-          <div className="mb-4 flex justify-end w-full max-w-full overflow-hidden">
+          <div className="text-[#47545c] mb-4 flex justify-end w-full max-w-full overflow-hidden">
             <select
               value={bookingTypeFilter}
               onChange={(e) =>
@@ -230,7 +230,7 @@ export default function Dashboard() {
             />
 
             {selectedEvent && (
-              <div className="w-full max-w-full overflow-hidden fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
+              <div className="text-[#47545c] w-full max-w-full overflow-hidden fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-50 flex items-center justify-center">
                 <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
                   <h2 className="text-xl font-bold mb-4">Booking Details</h2>
                   <p>
