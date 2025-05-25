@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/admin/:match*",
+      "destination": "/booking-admin-panel/:match*"
+    },
+    {
+      "source": "/:match*",
+      "destination": "/booking-frontend/:match*"
+    }
+  ]
+}
