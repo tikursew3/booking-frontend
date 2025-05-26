@@ -37,7 +37,7 @@ export default function Booking() {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const res = await api.get("api/bookings/calendar"); // or your booking API
+        const res = await api.get("api/bookings/calendar"); //booking API
         const events = res.data;
   
         const blocked = events
@@ -56,7 +56,7 @@ export default function Booking() {
     fetchSlots();
   }, []);
 
-  // 🔒 Prevent selecting taken slots
+  // Prevent selecting taken slots
   const isTimeSlotAvailable = (date: Date): boolean => {
     return !takenSlots.some((slot) => {
       const start = new Date(slot.start).setSeconds(0, 0);
@@ -87,7 +87,7 @@ export default function Booking() {
   
       const selectedStart = new Date(selectedDate);
   
-      // ⛔ Past date check
+      //  Past date check
       if (selectedStart < new Date()) {
         setMessage("❌ You cannot book in the past.");
         setLoading(false);
@@ -102,12 +102,12 @@ export default function Booking() {
       });
   
       if (conflict) {
-        setMessage("❌ That time slot is already booked. Please choose another.");
+        setMessage("That time slot is already booked. Please choose another.");
         setLoading(false);
         return;
       }
   
-      // ✅ Format to local ISO (no timezone shift)
+      //  Format to local ISO (no timezone shift)
       const formatLocalDateTimeForBackend = (date: Date): string => {
         const offset = date.getTimezoneOffset();
         const localDate = new Date(date.getTime() - offset * 60000);
