@@ -1,8 +1,14 @@
 {
   "rewrites": [
     {
-      "source": "/admin/:path*",
-      "destination": "https://booking-admin-panel.vercel.app/:path*"
+        "source": "/admin/:path*",
+        "destination": "https://booking-admin-panel.vercel.app/"
+    },
+    {
+        "source": "/admin/:match*", 
+        "destination": "https://booking-admin-panel.vercel.app/:match*"
     }
   ]
 }
+
+
