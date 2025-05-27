@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-        "source": "/admin/:path*",
-        "destination": "https://booking-admin-panel.vercel.app/:path*"
-    }
-  ]
-}   
