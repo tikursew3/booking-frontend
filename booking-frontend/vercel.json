@@ -1,14 +1,8 @@
 {
   "rewrites": [
     {
-        "source": "/admin/",
-        "destination": "https://booking-admin-panel.vercel.app/"
-    },
-    {
-        "source": "/admin/:match*", 
-        "destination": "https://booking-admin-panel.vercel.app/:match*"
-    },
-     {"source": "/", "destination": "https://www.edenphotographyanddecor.com/"},
-     {"source": "/:match*", "destination": "https://www.edenphotographyanddecor.com/:match*"}
+        "source": "/admin/:path*",
+        "destination": "https://booking-admin-panel.vercel.app/:path*"
+    }
   ]
 }   
