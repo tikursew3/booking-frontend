@@ -11,7 +11,7 @@ export default function BookingsPage() {
   >("ALL");
   const [statusFilter, setStatusFilter] = useState<
     "ALL" | "CONFIRMED" | "PENDING" | "CANCELLED"
-  >("CONFIRMED");
+  >("ALL");
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
