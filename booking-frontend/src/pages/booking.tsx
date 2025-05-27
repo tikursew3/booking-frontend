@@ -132,10 +132,11 @@ export default function Booking() {
         const bookingId = bookingRes.data.id;
         const depositAmount = bookingRes.data.depositAmount;
   
-        const stripeRes = await api.post("/api/stripe/create-checkout-session", null, {
-          params: { bookingId, amount: depositAmount },
+        const stripeRes = await api.post("/api/stripe/create-checkout-session", {
+          bookingId,
+          amount: depositAmount,
         });
-  
+          
         window.location.href = stripeRes.data.checkoutUrl;
       }
     } catch (error: unknown) {
