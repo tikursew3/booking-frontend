@@ -11,4 +11,4 @@
      {"source": "/", "destination": "https://www.edenphotographyanddecor.com/"},
      {"source": "/:match*", "destination": "https://www.edenphotographyanddecor.com/:match*"}
   ]
-}
+}   
