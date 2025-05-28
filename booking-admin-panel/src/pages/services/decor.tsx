@@ -286,7 +286,7 @@ export default function DecorAdminPage() {
                     .slice()
                     .sort((a, b) => a.id - b.id)
                     .map((item) => (
-                      <tr key={item.id} className="border-t">
+                      <tr key={item.id} className="border-t odd:bg-white even:bg-gray-50">
                         <td className="p-4">
                           {item.imageUrls?.[0] && (
                             <img
