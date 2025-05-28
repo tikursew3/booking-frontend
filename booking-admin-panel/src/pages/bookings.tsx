@@ -136,7 +136,7 @@ export default function BookingsPage() {
                   )
 
                   .map((b) => (
-                    <tr key={b.id} className="border-t odd:bg-white even:bg-gray-50">
+                    <tr key={b.id} className="border-t odd:bg-white even:bg-gray-100">
                       <td className="p-3">{b.customerName}</td>
                       <td className="p-3">{b.email}</td>
                       <td className="p-3">{b.phoneNumber}</td>
