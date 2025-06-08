@@ -33,6 +33,7 @@ export interface DashboardSummary {
   cancelledBookings: number;
   consultationCount: number;
   photographyCount: number;
+  decorCount: number;
   totalPayments: number;
 }
 
@@ -59,5 +60,25 @@ export interface DecorItem {
   description: string;
   imageUrls: string[];
   pricePerDay: number;
+  totalQuantity: number;
+  category: DecorCategory;
   active: boolean;
 }
+
+export interface DecorCategory {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  active: boolean;
+}
+
+export type DecorItemCreateDTO = {
+  name: string;
+  description: string;
+  pricePerDay: number;
+  totalQuantity: number;
+  active: boolean;
+  imageUrls: string[];
+  categoryId: number;
+};

@@ -1,33 +1,42 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
-import { DecorItem } from "@/types/types";
+import { DecorItem, DecorItemCreateDTO } from "@/types/types";
 
-// ✅ 1. All items (for admin panel)
+// ✅ 1. All items (admin panel)
 export const useAllDecorItems = () => {
-  return useQuery({
+  return useQuery<DecorItem[]>({
     queryKey: ["decor-items-all"],
-    queryFn: async () => {
-      const res = await api.get<DecorItem[]>("/api/decor-items");
-      return res.data;
+    queryFn: async (): Promise<DecorItem[]> => {
+      const res = await api.get("/api/decor-items");
+
+      if (!Array.isArray(res.data)) {
+        console.error("Expected an array, got:", res.data);
+        return []; // fallback to empty array to prevent crashes
+      }
+
+      return res.data as DecorItem[];
     },
   });
 };
 
-// ✅ 2. Only active items (for frontend display)
+// ✅ 2. Active items only (frontend)
 export const useDecorItems = () => {
-  return useQuery({
+  return useQuery<DecorItem[]>({
     queryKey: ["decor-items"],
-    queryFn: async () => {
-      const res = await api.get<DecorItem[]>("/api/decor-items");
-      return res.data.filter((item) => item.active);
+    queryFn: async (): Promise<DecorItem[]> => {
+      const res = await api.get("/api/decor-items");
+      console.log("Fetched decor items:", res.data);
+      const allItems = res.data as DecorItem[];
+      return allItems.filter((item) => item.active);
     },
   });
 };
 
+// ✅ 3. Add new decor item
 export const useAddDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: Omit<DecorItem, "id">) => {
+    mutationFn: async (data: DecorItemCreateDTO) => {
       const response = await api.post("/api/decor-items", data);
       return response.data;
     },
@@ -38,6 +47,7 @@ export const useAddDecorItem = () => {
   });
 };
 
+// ✅ 4. Update decor item
 export const useUpdateDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -52,6 +62,7 @@ export const useUpdateDecorItem = () => {
   });
 };
 
+// ✅ 5. Delete decor item
 export const useDeleteDecorItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -65,3 +76,23 @@ export const useDeleteDecorItem = () => {
     },
   });
 };
+
+// ✅ 6. Items by category with date-based availability check
+export const useDecorItemsByCategory = (
+  categoryId: number | undefined,
+  start: string | undefined,
+  end: string | undefined
+) => {
+  return useQuery<DecorItem[]>({
+    queryKey: ["decor-items-by-category", categoryId, start, end],
+    queryFn: async (): Promise<DecorItem[]> => {
+      const res = await api.get(`/api/decor-items/by-category/${categoryId}`, {
+        params: { start, end },
+      });
+      return res.data as DecorItem[];
+    },
+    enabled: !!categoryId && !!start && !!end, // ensures only runs when all are defined
+  });
+};
+
+

@@ -8,16 +8,26 @@ export interface PhotographyService {
     imageUrls: string[];
     active: boolean;
   }
-
+     
   export interface DecorItem {
-    id: number;
-    name: string;
-    description: string;
-    pricePerDay: number;
-    
-    imageUrls: string[];
-    active: boolean;
-  }
+  id: number;
+  name: string;
+  description: string;
+  pricePerDay: number;
+  imageUrls: string[];
+  active: boolean;
+  totalQuantity: number;
+  availableQuantity: number; // ✅ add this
+}
+
+export interface DecorItemWithAvailabilityDTO {
+  id: number;
+  name: string;
+  description: string;
+  pricePerDay: number;
+  imageUrls: string[];
+  availableQuantity: number;
+}
   
   export interface BookingCalendarEventDTO {
     title: string;
@@ -39,6 +49,15 @@ export interface PhotographyService {
  export interface BlockedSlot {
   start: string;
   end: string;
+}
+
+
+export interface DecorCategory {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  active: boolean;
 }
 
 

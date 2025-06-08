@@ -12,15 +12,21 @@ export default function AdminLayout({ children }: Props) {
   const router = useRouter();
 
   const navItems = [
-    { name: "Dashboard", href: "/index", icon: <Home size={20} /> },
+    { name: "Dashboard", href: "/", icon: <Home size={20} /> },
     {
       name: "Photography",
       href: "/services/photography",
       icon: <Camera size={20} />,
     },
     { name: "Decor", href: "/services/decor", icon: <Gift size={20} /> },
+    {
+      name: "Decor Categories",
+      href: "/services/decor-categories",
+      icon: <Gift size={20} />,
+    },
     { name: "Calendar", href: "/calendar", icon: <Calendar size={20} /> },
     { name: "Bookings", href: "/bookings", icon: <BookOpen size={20} /> },
+   
   ];
 
   const handleLogout = async () => {

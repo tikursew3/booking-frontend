@@ -40,7 +40,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [serviceData, setServiceData] = useState<ServiceBookingData[]>([]);
   const [bookingTypeFilter, setBookingTypeFilter] = useState<
-    "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+    "ALL" | "PHOTOGRAPHY" | "CONSULTATION" | "DECOR"
   >("ALL");
   const [calendarEvents, setCalendarEvents] = useState<
     BookingCalendarEventDTO[]
@@ -127,6 +127,7 @@ export default function Dashboard() {
             <Card title="🟠 Pending" value={summary.pendingBookings} />
             <Card title="❌ Cancelled" value={summary.cancelledBookings} />
             <Card title="📸 Photography" value={summary.photographyCount} />
+            <Card title="📸 Decor" value={summary.decorCount} />
             <Card title="💬 Consultations" value={summary.consultationCount} />
             <Card
               title="💰 Total Payments"

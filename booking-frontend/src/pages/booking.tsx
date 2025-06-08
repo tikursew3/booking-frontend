@@ -37,7 +37,7 @@ export default function Booking() {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const res = await api.get("api/bookings/calendar"); //booking API
+        const res = await api.get("/api/bookings/calendar"); //booking API
         const events = res.data;
   
         const blocked = events
@@ -135,6 +135,7 @@ export default function Booking() {
         const stripeRes = await api.post("/api/stripe/create-checkout-session", {
           bookingId,
           amount: depositAmount,
+          bookingType: formData.bookingType, //Send booking type dynamically
         });
           
         window.location.href = stripeRes.data.checkoutUrl;
@@ -149,7 +150,7 @@ export default function Booking() {
       setLoading(false);
     }
   };
-  
+    
 
   return (
     <Layout headerType="alternate">
