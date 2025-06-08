@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import { DecorItem } from "@/types/types";
+import { DecorItem, DecorCategory } from "@/types/types";
 import CloudinaryImagePicker from "@/components/CloudinaryImagePicker";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
 interface Props {
+  categoryId: number;
   initialData?: DecorItem;
   onSubmit: (data: Omit<DecorItem, "id">) => void;
   onCancel?: () => void;
 }
 
-export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props) {
+export default function DecorItemForm({ categoryId, initialData, onSubmit, onCancel }: Props) {
   const [formData, setFormData] = useState<Omit<DecorItem, "id">>({
     name: "",
     description: "",
     imageUrls: [],
     pricePerDay: 0,
+    totalQuantity: 1,
+    category: { id: categoryId } as DecorCategory,
     active: true,
   });
 
@@ -24,10 +27,11 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
     if (initialData) {
       setFormData({
         ...initialData,
+        category: { id: categoryId } as DecorCategory,
         imageUrls: initialData.imageUrls || [],
       });
     }
-  }, [initialData]);
+  }, [initialData, categoryId]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,8 +42,8 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
       [name]:
         type === "checkbox"
           ? checked
-          : name === "pricePerDay"
-          ? parseFloat(value) || 0
+          : name === "pricePerDay" || name === "totalQuantity"
+          ? Number(value)
           : value,
     }));
   };
@@ -72,10 +76,7 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
   return (
     <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-lg p-6 max-w-xl w-full relative">
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 bg-white p-6 rounded-xl shadow-md"
-        >
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             name="name"
@@ -95,7 +96,28 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
             className="w-full border rounded px-4 py-2"
           />
 
-          {/* 📁 Upload from local files */}
+          <input
+            type="number"
+            name="pricePerDay"
+            placeholder="Price per day"
+            value={formData.pricePerDay}
+            onChange={handleChange}
+            step="0.01"
+            min="0"
+            className="w-full border rounded px-4 py-2"
+          />
+
+          <input
+            type="number"
+            name="totalQuantity"
+            placeholder="Total quantity"
+            value={formData.totalQuantity}
+            onChange={handleChange}
+            min="1"
+            className="w-full border rounded px-4 py-2"
+          />
+
+          {/* Local file upload */}
           <input
             type="file"
             accept="image/*"
@@ -104,7 +126,7 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
             className="w-full border rounded px-4 py-2 cursor-pointer"
           />
 
-          {/* ☁️ Choose from Cloudinary */}
+          {/* Cloudinary Picker */}
           <button
             type="button"
             onClick={() => setShowImagePicker(true)}
@@ -126,9 +148,9 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
             />
           )}
 
-          {/* 📸 Preview selected images */}
+          {/* Preview selected images*/}
           {formData.imageUrls.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2">
               {formData.imageUrls.map((url, index) => (
                 <div key={index} className="relative">
                   <img
@@ -152,17 +174,6 @@ export default function DecorItemForm({ initialData, onSubmit, onCancel }: Props
               ))}
             </div>
           )}
-
-          <input
-            type="number"
-            name="pricePerDay"
-            placeholder="Price per day"
-            value={formData.pricePerDay}
-            onChange={handleChange}
-            className="w-full border rounded px-4 py-2"
-            step="0.01"
-            min="0"
-          />
 
           <label className="flex items-center space-x-2">
             <input
