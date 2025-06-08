@@ -17,7 +17,7 @@ export interface BookingCalendarEventDTO {
   bookingType: string;
   status: string;
   startDateTime: string;
-  endDateTime: string; // ✅ Add this line
+  endDateTime: string; // 
   photographyService?: {
     name: string;
   };
@@ -25,7 +25,7 @@ export interface BookingCalendarEventDTO {
   location?: string;
   notes?: string;
 }
-
+  
 export interface DashboardSummary {
   totalBookings: number;
   pendingBookings: number;

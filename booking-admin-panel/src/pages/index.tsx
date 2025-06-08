@@ -31,7 +31,7 @@ const localizer = dateFnsLocalizer({
   startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 0 }),
   getDay,
   locales,
-});
+});  
 
 export default function Dashboard() {
   const router = useRouter();

@@ -7,12 +7,12 @@ import dayjs from "dayjs";
 
 export default function DecorCheckoutPage() {
   const router = useRouter();
-  const { itemId, start, end } = router.query;
+  const { itemId } = router.query;
 
   const [rentalStart, setRentalStart] = useState("");
   const [rentalEnd, setRentalEnd] = useState("");
-
   const [item, setItem] = useState<DecorItem | null>(null);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -37,13 +37,13 @@ export default function DecorCheckoutPage() {
       const endDate = dayjs(rentalEnd);
       const days = endDate.diff(startDate, "day") + 1;
       const total = days * item.pricePerDay * quantity;
-      const depositAmount = total * 0.3; // 30% deposit
+      const depositAmount = total * 0.3;
 
       setRentalDays(days);
       setTotalPrice(total);
       setDeposit(depositAmount);
     }
-  }, [item, start, end, quantity]);
+  }, [item, rentalStart, rentalEnd, quantity]);
 
   const handleSubmit = async () => {
     if (!name || !phone || !email || !rentalStart || !rentalEnd || !item || quantity < 1) {
@@ -70,27 +70,27 @@ export default function DecorCheckoutPage() {
       });
 
       const booking = bookingRes.data;
-      const bookingId = booking.id;
+      const bookingId = booking.bookingId; // 🟢 Fix: Use correct field
 
       const stripeRes = await api.post("/api/stripe/create-checkout-session", {
         bookingId,
-        amount: deposit, // only charge deposit now
-        bookingType: "DECOR",
+        amount: deposit,
+        bookingType: "DECOR", // 🟢 Fix: Explicitly pass booking type
       });
 
       window.location.href = stripeRes.data.checkoutUrl;
-  } catch (err: unknown) {
-  if (err && typeof err === "object" && "response" in err) {
-    const axiosError = err as { response?: { data?: string }; message?: string };
-    console.error("Booking error:", axiosError.response?.data || axiosError.message);
-  } else {
-    console.error("Unknown booking error:", err);
-  }
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && "response" in err) {
+        const axiosError = err as { response?: { data?: string }; message?: string };
+        console.error("Booking error:", axiosError.response?.data || axiosError.message);
+      } else {
+        console.error("Unknown booking error:", err);
+      }
 
-  alert("Something went wrong. Please try again.");
-} finally {
-    setSubmitting(false);
-  }
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!item) {
