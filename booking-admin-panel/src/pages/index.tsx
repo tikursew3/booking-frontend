@@ -128,7 +128,7 @@ export default function Dashboard() {
             <Card title="🟠 Pending" value={summary.pendingBookings} />
             <Card title="❌ Cancelled" value={summary.cancelledBookings} />
             <Card title="📸 Photography" value={summary.photographyCount} />
-            <Card title="📸 Decor" value={summary.decorCount} />
+            <Card title="🎀  Decor" value={summary.decorCount} />
             <Card title="💬 Consultations" value={summary.consultationCount} />
             <Card
               title="💰 Total Payments"
@@ -137,7 +137,7 @@ export default function Dashboard() {
           </div>
 
           <h2 className="text-[#47545c] text-2xl font-semibold mt-16 mb-4 text-center w-full max-w-full overflow-hidden">
-            📸 Bookings by Service
+            Bookings by Service
           </h2>
 
           <div className="w-full h-96">
