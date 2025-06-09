@@ -10,6 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  Cell,
 } from "recharts";
 import {
   DashboardSummary,
@@ -146,10 +147,36 @@ export default function Dashboard() {
                 margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="serviceName" />
+                <XAxis
+                dataKey="serviceName"
+                tickFormatter={(name) => {
+                  if (name.toLowerCase().includes("decor")) return "🎀 Decor Rental";
+                  if (name.toLowerCase().includes("consultation")) return "💬 Consultation";
+                  if (name.toLowerCase().includes("photography")) return "📸 " + name;
+                  return name;
+                }}
+              />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill="#6366F1" radius={[6, 6, 0, 0]} />
+                <Bar
+                  dataKey="count"
+                  radius={[6, 6, 0, 0]}
+                  fill="#8884d8"
+                >
+                  {serviceData.map((entry, index) => {
+                    let fillColor = "#8884d8"; // default
+
+                    if (entry.serviceName.toLowerCase().includes("decor")) {
+                      fillColor = "#F59E0B"; // amber
+                    } else if (entry.serviceName.toLowerCase().includes("consultation")) {
+                      fillColor = "#10B981"; // green
+                    } else if (entry.serviceName.toLowerCase().includes("photography")) {
+                      fillColor = "#6366F1"; // indigo
+                    }
+
+                    return <Cell key={`cell-${index}`} fill={fillColor} />;
+                  })}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
