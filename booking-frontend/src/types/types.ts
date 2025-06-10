@@ -17,7 +17,8 @@ export interface PhotographyService {
   imageUrls: string[];
   active: boolean;
   totalQuantity: number;
-  availableQuantity: number; // ✅ add this
+  availableQuantity: number; 
+  decorCategoryId: number;
 }
 
 export interface DecorItemWithAvailabilityDTO {

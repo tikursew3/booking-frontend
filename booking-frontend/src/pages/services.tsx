@@ -101,12 +101,11 @@ export default function ServicesPage() {
                 <p className="text-gray-700 text-sm">
                   💲{item.pricePerDay.toFixed(2)} / day
                 </p>
-                <a
-                  href="tel:+1234567890"
-                  className="text-pink-600 hover:underline mt-2 inline-block"
-                >
-                  Call for Availability →
-                </a>
+                <Link href={`/decor/category/${item.decorCategoryId}`}>
+                  <button className="mt-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition text-sm">
+                    View & Checkout →
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
