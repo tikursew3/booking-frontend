@@ -102,10 +102,7 @@ export default function ServicesPage() {
                   💲{item.pricePerDay.toFixed(2)} / day
                 </p>
 
-                <p className="text-gray-700 text-sm">
-                  Available Quantity: {item.availableQuantity}
-                </p>
-                
+               
               </div>
             </div>
           ))}
@@ -113,7 +110,8 @@ export default function ServicesPage() {
 
         <div className="text-center mt-10">
           <Link href="/decor">
-            <button className="text-pink-700 hover:underline font-medium text-lg">
+          
+            <button className="bg-pink-300 mt-3 px-4 py-3 text-white hover:bg-pink-400 transition font-medium text-lg">
               View All Decor Services
             </button>
           </Link>
