@@ -18,7 +18,7 @@ export interface PhotographyService {
   active: boolean;
   totalQuantity: number;
   availableQuantity: number; 
-  decorCategoryId: number;
+  decorCategoryId: number;  
 }
 
 export interface DecorItemWithAvailabilityDTO {

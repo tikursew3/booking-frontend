@@ -101,9 +101,9 @@ export default function ServicesPage() {
                 <p className="text-gray-700 text-sm">
                   💲{item.pricePerDay.toFixed(2)} / day
                 </p>
-                <Link href={`/decor/category/${item.decorCategoryId}`}>
+                <Link href={`/decor/category`}>
                   <button className="mt-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition text-sm">
-                    View & Checkout →
+                    View in Category →
                   </button>
                 </Link>
               </div>
