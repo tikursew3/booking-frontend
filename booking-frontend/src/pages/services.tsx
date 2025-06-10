@@ -70,7 +70,7 @@ export default function ServicesPage() {
 
         <div className="text-center mt-10">
           <Link href="/photography">
-            <button className="bg-black-600 text-purple-700 hover:underline font-medium text-lg">
+            <button className="bg-purple-400 hover:bg-purple-600 text-white py-3 px-6 rounded-xl transition text-lg">
               View All Photography Services
             </button>
           </Link>
@@ -111,7 +111,7 @@ export default function ServicesPage() {
         <div className="text-center mt-10">
           <Link href="/decor">
           
-            <button className="bg-pink-300 mt-3 px-4 py-3 text-white hover:bg-pink-400 transition font-medium text-lg">
+            <button className="bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-xl transition text-lg">
               View All Decor Services
             </button>
           </Link>
@@ -128,7 +128,7 @@ export default function ServicesPage() {
           options.
         </p>
         <Link href="/booking?bookingType=CONSULTATION">
-          <button className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-xl transition text-lg">
+          <button className="bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-xl transition text-lg">
             🗓️ Schedule a Consultation
           </button>
         </Link>
