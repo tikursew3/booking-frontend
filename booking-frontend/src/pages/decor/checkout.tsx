@@ -185,13 +185,23 @@ export default function DecorCheckoutPage() {
               <p>Deposit (30%): <strong>${deposit.toFixed(2)}</strong></p>
             </div>
 
-            <button
-              disabled={submitting}
-              onClick={handleSubmit}
-              className="mt-6 bg-pink-500 text-white px-4 py-3 rounded-md hover:bg-pink-600 transition w-full text-lg font-semibold disabled:opacity-60"
-            >
-              {submitting ? "Redirecting to Payment..." : "Confirm & Pay Deposit"}
-            </button>
+            <div className="mt-6 flex flex-col sm:flex-row gap-4">
+
+              <button
+                disabled={submitting}
+                onClick={handleSubmit}
+                className="mt-6 bg-pink-500 text-white px-4 py-3 rounded-md hover:bg-pink-600 transition flex-1 text-lg font-semibold disabled:opacity-60"
+              >
+                {submitting ? "Redirecting to Payment..." : "Confirm & Pay Deposit"}
+              </button>
+
+              <button
+                onClick={() => router.back()}
+                className="mt-3 px-4 py-3 rounded-md text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition flex-1 text-lg"
+              >
+                ← Go Back
+              </button>
+            </div>
           </div>
         </div>
       </section>
