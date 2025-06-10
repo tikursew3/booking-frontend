@@ -34,7 +34,7 @@ export interface DecorItemWithAvailabilityDTO {
     start: string;
     end: string;
     status: "PENDING" | "CONFIRMED" | "CANCELLED";
-    bookingType: "PHOTOGRAPHY" | "CONSULTATION";
+    bookingType: "PHOTOGRAPHY" | "CONSULTATION" | "DECOR";
   }
 
  // Define event type

@@ -41,7 +41,7 @@ export default function Booking() {
         const events = res.data;
   
         const blocked = events
-          .filter((e: BookingCalendarEventDTO) => e.status !== "CANCELLED") // PENDING or CONFIRMED
+          .filter((e: BookingCalendarEventDTO) => e.status !== "CANCELLED" && e.bookingType !== "DECOR") // PENDING or CONFIRMED
           .map((e: BookingCalendarEventDTO) => ({
             start: e.start,
             end: e.end,
@@ -64,7 +64,7 @@ export default function Booking() {
       const d = new Date(date).setSeconds(0, 0);
       return d >= start && d < end;
     });
-  };
+  };   
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

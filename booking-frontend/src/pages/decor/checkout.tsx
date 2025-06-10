@@ -195,6 +195,6 @@ export default function DecorCheckoutPage() {
           </div>
         </div>
       </section>
-    </Layout>
+    </Layout>    
   );
 }
