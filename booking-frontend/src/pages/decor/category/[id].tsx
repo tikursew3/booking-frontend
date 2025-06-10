@@ -148,6 +148,14 @@ export default function DecorItemsByCategoryPage() {
         ) : (
           !isLoading && <p className="text-center text-gray-500">No items found.</p>
         )}
+        <div className="mt-6 flex flex-col sm:flex-row gap-4">
+          <button
+                onClick={() => router.back()}
+                className="mt-3 px-4 py-3 rounded-md text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition flex-1 text-lg"
+              >
+                ← Go Back
+              </button>
+        </div>
       </section>
     </Layout>
   );
