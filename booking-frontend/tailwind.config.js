@@ -6,13 +6,19 @@ module.exports = {
     extend: {
       scrollBehavior: ['smooth'],
       keyframes: {
-        blink: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
+        glow: {
+          '0%, 100%': {
+            textShadow: '0 0 5px #6366F1, 0 0 10px #6366F1, 0 0 20px #6366F1',
+            color: '#6366F1',
+          },
+          '50%': {
+            textShadow: '0 0 2px #6366F1, 0 0 4px #6366F1, 0 0 8px #6366F1',
+            color: '#6366F1',
+          },
         },
       },
       animation: {
-        blink: 'blink 1s infinite',
+        glow: 'glow 1.5s ease-in-out infinite',
       },
     },
   },

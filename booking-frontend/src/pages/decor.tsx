@@ -49,7 +49,7 @@ export default function DecorPage() {
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Browse Decor Categories
         </h2>
-        <p className="text-center text-gray-600 mb-12 animate-blink">
+        <p className="text-center text-gray-600 mb-12 animate-glow">
           Click a category to explore available rental materials.
         </p>
    
