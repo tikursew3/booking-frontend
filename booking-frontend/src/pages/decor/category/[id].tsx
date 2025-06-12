@@ -152,7 +152,7 @@ export default function DecorItemsByCategoryPage() {
           <div className="flex justify-end mt-6">
             <button
               onClick={() => router.back()}
-              className="bg-pink-300 hover:bg-pink-400 text-white px-4 py-2 rounded-md shadow transition"
+              className="mt-6 bg-pink-400 text-white px-4 py-3 rounded-md hover:bg-pink-500 transition flex-1 text-lg font-semibold disabled:opacity-60"
             >
               ← Go Back
             </button>
