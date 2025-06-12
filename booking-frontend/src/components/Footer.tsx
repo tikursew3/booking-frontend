@@ -63,7 +63,7 @@ export default function Footer() {
           <p className="text-lg">
             Email:{" "}
             <a
-              href="mailto:info@yourbusiness.com"
+              href="mailto:Edensparty26@gmail.com"
               className="text-blue-400 hover:underline"
             >
               Edensparty26@gmail.com

@@ -97,7 +97,7 @@ export default function Dashboard() {
     if (!authChecked) return;
 
     api
-      .get<ServiceBookingData[]>("/api/bookings/bookings-by-service")
+      .get<[]>("/api/bookings/bookings-by-service")
       .then((res) => setServiceData(res.data))
       .catch((err) =>
         console.error("Failed to load service booking chart data", err)
@@ -150,10 +150,11 @@ export default function Dashboard() {
                 <XAxis
                 dataKey="serviceName"
                 tickFormatter={(name) => {
-                  if (name.toLowerCase().includes("decor")) return "🎀 Decor Rental";
-                  if (name.toLowerCase().includes("consultation")) return "💬 Consultation";
-                  if (name.toLowerCase().includes("photography")) return "📸 " + name;
-                  return name;
+                  const lower = name?.toLowerCase() || "";
+                  if (lower.includes("decor")) return "🎀 Decor Rental";
+                  if (lower.includes("consultation")) return "💬 Consultation";
+                  if (lower.includes("photography")) return "📸 " + name;
+                  return name || "Unknown";
                 }}
               />
                 <YAxis />
@@ -164,13 +165,14 @@ export default function Dashboard() {
                   fill="#8884d8"
                 >
                   {serviceData.map((entry, index) => {
+                    const name = entry.serviceName?.toLowerCase() || "";
                     let fillColor = "#8884d8"; // default
 
-                    if (entry.serviceName.toLowerCase().includes("decor")) {
+                    if (name.includes("decor")) {
                       fillColor = "#F59E0B"; // amber
-                    } else if (entry.serviceName.toLowerCase().includes("consultation")) {
+                    } else if (name.includes("consultation")) {
                       fillColor = "#10B981"; // green
-                    } else if (entry.serviceName.toLowerCase().includes("photography")) {
+                    } else if (name.includes("photography")) {
                       fillColor = "#6366F1"; // indigo
                     }
 

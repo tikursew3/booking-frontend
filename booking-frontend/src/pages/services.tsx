@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useServices } from "@/hooks/useServices";
 import { useDecorItems } from "@/hooks/useDecorItems";
+import Footer from "@/components/Footer";
 
 export default function ServicesPage() {
   const { data: photoServices } = useServices();
@@ -133,6 +134,7 @@ export default function ServicesPage() {
           </button>
         </Link>
       </section>
+      <Footer />
     </Layout>
   );
 }

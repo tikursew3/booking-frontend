@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import api from "@/lib/axios";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -52,8 +53,8 @@ export default function ContactPage() {
             <div className="space-y-4 text-white">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-200" />
-                <a href="mailto:hello@passion2code.com" className="text-2xl hover:underline">
-                  hello@passion2code.com
+                <a href="mailto:Edensparty26@gmail.com" className="text-2xl hover:underline">
+                  Edensparty26@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-3">
@@ -64,7 +65,7 @@ export default function ContactPage() {
               </div>
               <div className="flex items-center space-x-3 text-2xl">
                 <MapPin className="w-5 h-5  text-red-200" />
-                <span>123 Creative Lane, Cityville, NY</span>
+                <span>980 Garden View Drive, Apple Valley, MN</span>
               </div>
             </div>
 
@@ -144,6 +145,7 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
+        <Footer />
       </main>
     </Layout>
   );

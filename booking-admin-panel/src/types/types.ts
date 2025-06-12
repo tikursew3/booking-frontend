@@ -39,7 +39,7 @@ export interface DashboardSummary {
 
 export interface ServiceBookingData {
   serviceName: string;
-  count: number;
+  count: number;   
 }
 
 // src/types/types.ts
