@@ -97,7 +97,7 @@ export default function Dashboard() {
     if (!authChecked) return;
 
     api
-      .get<[]>("/api/bookings/bookings-by-service")
+      .get<ServiceBookingData[]>("/api/bookings/bookings-by-service")
       .then((res) => setServiceData(res.data))
       .catch((err) =>
         console.error("Failed to load service booking chart data", err)
