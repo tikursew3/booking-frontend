@@ -4,6 +4,7 @@ import { useDecorCategories } from "@/hooks/useDecorCategories";
 import { DecorCategory } from "@/types/types";
 
 import "keen-slider/keen-slider.min.css";
+import Footer from "@/components/Footer";
 
 
 export default function DecorPage() {
@@ -48,10 +49,10 @@ export default function DecorPage() {
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Browse Decor Categories
         </h2>
-        <p className="text-center text-gray-600 mb-12">
+        <p className="text-center text-gray-600 mb-12 animate-blink">
           Click a category to explore available rental materials.
         </p>
-
+   
         {isLoading && <p className="text-center">Loading categories...</p>}
         {error && <p className="text-center text-red-500">Failed to load categories.</p>}
 
@@ -100,6 +101,10 @@ export default function DecorPage() {
           </button>
         </Link>
         </div>
+
+      </section>
+      <section>
+        <Footer />
       </section>
     </Layout>
   );
