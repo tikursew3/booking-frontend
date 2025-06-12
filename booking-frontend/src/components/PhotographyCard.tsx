@@ -20,7 +20,7 @@ export default function PhotographyCard({ service }: { service: PhotographyServi
   showStatus={false}
   showIndicators={true}
   autoPlay
-  interval={5000}
+  interval={4000}
   stopOnHover
   swipeable
   renderArrowPrev={(onClickHandler, hasPrev, label) =>

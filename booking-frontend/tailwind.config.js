@@ -1,16 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: false, // <--- disables dark mode globally
-    content: [
-      "./src/**/*.{js,ts,jsx,tsx}"
-    ],
-    theme: {
-      extend: {scrollBehavior: ['smooth'],},
-    },
-    plugins: [],
-
-    theme: {
+  darkMode: false,
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
     extend: {
+      scrollBehavior: ['smooth'],
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
@@ -22,5 +16,5 @@ module.exports = {
       },
     },
   },
-  }
-  
+  plugins: [],
+};

@@ -42,7 +42,7 @@ export default function ContactPage() {
   return (
     <Layout headerType="alternate">
       <main className="min-h-screen py-20 px-4 bg-gradient-to-br from-purple-50 to-pink-50">
-        <div className="max-w-6xl mb-3 mx-auto bg-white rounded-t-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+        <div className="max-w-6xl mb-2 mx-auto bg-white rounded-t-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
           {/* LEFT SIDE - Contact Info */}
           <div className="bg-gradient-to-b from-purple-500 to-pink-400 text-white p-10">
             <h2 className="text-4xl font-bold mb-4">📍 Get in Touch</h2>
@@ -145,9 +145,10 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
-        <div><Footer /></div>
+        
         
       </main>
+      <div><Footer /></div>
     </Layout>
   );
 }
