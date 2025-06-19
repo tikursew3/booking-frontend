@@ -46,19 +46,41 @@ export default function DecorCheckoutPage() {
   }, [item, rentalStart, rentalEnd, quantity]);
 
   const handleSubmit = async () => {
-    if (!name || !phone || !email || !rentalStart || !rentalEnd || !item || quantity < 1) {
+    if (
+      !name ||
+      !phone ||
+      !email ||
+      !rentalStart ||
+      !rentalEnd ||
+      !item ||
+      quantity < 1
+    ) {
       alert("Please fill in all fields.");
-      return;
-    }
-
-    if (quantity > item.availableQuantity) {
-      alert(`Only ${item.availableQuantity} items are available for this date.`);
       return;
     }
 
     try {
       setSubmitting(true);
 
+      // ✅ Step 1: Check availability for selected dates
+      const availabilityRes = await api.get(
+        `/api/decor-items/${item.id}/availability`,
+        {
+          params: {
+            start: rentalStart,
+            end: rentalEnd,
+          },
+        }
+      );
+
+      const availableQty = availabilityRes.data.availableQuantity;
+
+      if (quantity > availableQty) {
+        alert(`Only ${availableQty} items are available for this date.`);
+        return;
+      }
+
+      // ✅ Step 2: Proceed to book
       const bookingRes = await api.post("/api/bookings/decor-booking", {
         decorItemId: item.id,
         quantity,
@@ -70,19 +92,25 @@ export default function DecorCheckoutPage() {
       });
 
       const booking = bookingRes.data;
-      const bookingId = booking.bookingId; // 🟢 Fix: Use correct field
+      const bookingId = booking.bookingId;
 
       const stripeRes = await api.post("/api/stripe/create-checkout-session", {
         bookingId,
         amount: deposit,
-        bookingType: "DECOR", // 🟢 Fix: Explicitly pass booking type
+        bookingType: "DECOR",
       });
 
       window.location.href = stripeRes.data.checkoutUrl;
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {
-        const axiosError = err as { response?: { data?: string }; message?: string };
-        console.error("Booking error:", axiosError.response?.data || axiosError.message);
+        const axiosError = err as {
+          response?: { data?: string };
+          message?: string;
+        };
+        console.error(
+          "Booking error:",
+          axiosError.response?.data || axiosError.message
+        );
       } else {
         console.error("Unknown booking error:", err);
       }
@@ -96,7 +124,9 @@ export default function DecorCheckoutPage() {
   if (!item) {
     return (
       <Layout headerType="alternate">
-        <div className="py-20 text-center text-xl text-gray-700">Loading decor item...</div>
+        <div className="py-20 text-center text-xl text-gray-700">
+          Loading decor item...
+        </div>
       </Layout>
     );
   }
@@ -104,13 +134,19 @@ export default function DecorCheckoutPage() {
   return (
     <Layout headerType="alternate">
       <section className="py-16 px-6 max-w-3xl mx-auto bg-white">
-        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Checkout</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
+          Checkout
+        </h1>
 
         <div className="border rounded-xl shadow p-6 bg-gray-50">
           <div className="mb-6">
             <h2 className="text-2xl font-semibold">{item.name}</h2>
-            <p className="mt-2 font-medium">Price per day: ${item.pricePerDay}</p>
-            <p className="text-sm text-gray-500 mt-1">Available: {item.availableQuantity} units</p>
+            <p className="mt-2 font-medium">
+              Price per day: ${item.pricePerDay}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">
+              Available: {item.availableQuantity} units
+            </p>
           </div>
 
           <div className="grid gap-4">
@@ -180,19 +216,26 @@ export default function DecorCheckoutPage() {
             </div>
 
             <div className="mt-4 text-gray-700 text-lg space-y-1">
-              <p>Rental Days: <strong>{rentalDays}</strong></p>
-              <p>Total Price: <strong>${totalPrice.toFixed(2)}</strong></p>
-              <p>Deposit (30%): <strong>${deposit.toFixed(2)}</strong></p>
+              <p>
+                Rental Days: <strong>{rentalDays}</strong>
+              </p>
+              <p>
+                Total Price: <strong>${totalPrice.toFixed(2)}</strong>
+              </p>
+              <p>
+                Deposit (30%): <strong>${deposit.toFixed(2)}</strong>
+              </p>
             </div>
 
             <div className="mt-6 flex flex-col sm:flex-row gap-4">
-
               <button
                 disabled={submitting}
                 onClick={handleSubmit}
                 className="mt-6 bg-pink-400 text-white px-4 py-3 rounded-md hover:bg-pink-500 transition flex-1 text-lg font-semibold disabled:opacity-60"
               >
-                {submitting ? "Redirecting to Payment..." : "Confirm & Pay Deposit"}
+                {submitting
+                  ? "Redirecting to Payment..."
+                  : "Confirm & Pay Deposit"}
               </button>
 
               <button
@@ -205,6 +248,6 @@ export default function DecorCheckoutPage() {
           </div>
         </div>
       </section>
-    </Layout>    
+    </Layout>
   );
 }
