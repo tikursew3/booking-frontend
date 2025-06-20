@@ -61,7 +61,7 @@ export default function Dashboard() {
       } catch {
         router.push("/admin/login");
       }
-    };
+    };    
 
     checkAuth();
   }, []);
@@ -70,7 +70,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (!authChecked) return;
 
-    api
+    api   
       .get<BookingCalendarEventDTO[]>("/api/bookings/calendar")
       .then((res) => setCalendarEvents(res.data))
       .catch((err) => console.error("Failed to load calendar data", err));

@@ -20,7 +20,7 @@ export default function BookingsPage() {
       "Are you sure you want to cancel this booking?"
     );
     if (!confirmed) return;
-
+  
     try {
       await api.patch(`/api/bookings/${bookingId}/cancel`);
 
@@ -38,16 +38,23 @@ export default function BookingsPage() {
 
   useEffect(() => {
     api
-      .get<Booking[]>("/api/bookings")
-      .then((res) => {
-        const enriched = res.data.map((b) => ({
-          ...b,
-          serviceName: b.photographyService?.name || "—",
-        }));
-        setBookings(enriched);
-      })
-      .catch((err) => console.error("Failed to load bookings", err));
-  }, []);
+    .get<Booking[]>("/api/bookings")
+    .then((res) => {
+      const enriched = res.data.map((b) => {
+        let serviceName = "—";
+        if (b.bookingType === "PHOTOGRAPHY" && b.photographyService) {
+          serviceName = b.photographyService.name;
+        } else if (b.bookingType === "DECOR" && b.decorItem) {
+          serviceName = b.decorItem.name;
+        } else if (b.bookingType === "CONSULTATION") {
+          serviceName = "Consultation";
+        }
+        return { ...b, serviceName };
+      });
+      setBookings(enriched);
+    })
+    .catch((err) => console.error("Failed to load bookings", err));
+}, []);
 
   return (
     <AdminLayout>

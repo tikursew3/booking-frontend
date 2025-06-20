@@ -20,7 +20,10 @@ export interface BookingCalendarEventDTO {
   endDateTime: string; // 
   photographyService?: {
     name: string;
-  };
+  }; 
+  decorItem?: {
+    name: string;
+  };  
   serviceName?: string;
   location?: string;
   notes?: string;

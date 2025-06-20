@@ -17,7 +17,7 @@ const localizer = dateFnsLocalizer({
   startOfWeek,
   getDay,
   locales,
-});
+});     
 
 interface CalendarEvent extends Event {
   status: string;
