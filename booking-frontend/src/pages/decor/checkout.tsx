@@ -63,20 +63,26 @@ export default function DecorCheckoutPage() {
       setSubmitting(true);
 
       // ✅ Step 1: Check availability for selected dates
-      const availabilityRes = await api.get(
-        `/api/decor-items/${item.id}/availability`,
-        {
-          params: {
-            start: rentalStart,
-            end: rentalEnd,
-          },
+      let availableQty = 0;
+      try {
+        const availabilityRes = await api.get(
+          `/api/decor-items/${item.id}/availability`,
+          {
+            params: {
+              start: rentalStart,
+              end: rentalEnd,
+            },
+          }
+        );
+        availableQty = availabilityRes.data.availableQuantity;
+
+        if (quantity > availableQty) {
+          alert(`Only ${availableQty} items are available for this date.`);
+          return;
         }
-      );
-
-      const availableQty = availabilityRes.data.availableQuantity;
-
-      if (quantity > availableQty) {
-        alert(`Only ${availableQty} items are available for this date.`);
+      } catch (availabilityError) {
+        console.error("Failed to fetch availability", availabilityError);
+        alert("Could not check item availability. Please try again.");
         return;
       }
 
