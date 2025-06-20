@@ -69,8 +69,8 @@ export default function DecorCheckoutPage() {
           `/api/decor-items/${item.id}/availability`,
           {
             params: {
-              start: rentalStart,
-              end: rentalEnd,
+              start: dayjs(rentalStart).toISOString(),
+              end: dayjs(rentalEnd).toISOString(),
             },
           }
         );
