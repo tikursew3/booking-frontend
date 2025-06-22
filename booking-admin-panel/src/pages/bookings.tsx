@@ -158,7 +158,7 @@ export default function BookingsPage() {
                       <td className="p-3 space-x-2">
                         <button
                           onClick={() => setEditingBooking(b)}
-                          className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition"
+                          className="bg-blue-600 text-white px-3 py-1 mb-1 rounded-lg hover:bg-blue-700 transition"
                         >
                           Edit
                         </button>
@@ -167,7 +167,7 @@ export default function BookingsPage() {
                           b.status === "CONFIRMED") && (
                           <button
                             onClick={() => handleCancelBooking(b.id)}
-                            className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
+                            className="bg-red-600 text-white px-3 py-1 mt-1 rounded-lg hover:bg-red-700 transition"
                           >
                             Cancel
                           </button>
