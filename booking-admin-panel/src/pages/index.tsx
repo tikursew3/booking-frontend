@@ -156,7 +156,7 @@ export default function Dashboard() {
                   if (lower.includes("photography")) return "📸 " + name;
                   return name || "Unknown";
                 }}
-              />
+              />  
                 <YAxis />
                 <Tooltip />
                 <Bar
@@ -191,7 +191,7 @@ export default function Dashboard() {
               value={bookingTypeFilter}
               onChange={(e) =>
                 setBookingTypeFilter(
-                  e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+                  e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION" | "DECOR"
                 )
               }
               className="border px-3 py-2 rounded-md shadow-sm"
@@ -199,6 +199,7 @@ export default function Dashboard() {
               <option value="ALL">📋 All Bookings</option>
               <option value="PHOTOGRAPHY">📸 Photography</option>
               <option value="CONSULTATION">💬 Consultation</option>
+              <option value="DECOR">🎀 Decor </option>
             </select>
           </div>
 

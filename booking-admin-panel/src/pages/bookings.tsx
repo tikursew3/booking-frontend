@@ -7,7 +7,7 @@ import { Booking } from "@/types/types";
 export default function BookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [typeFilter, setTypeFilter] = useState<
-    "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+    "ALL" | "PHOTOGRAPHY" | "CONSULTATION" | "DECOR"
   >("ALL");
   const [statusFilter, setStatusFilter] = useState<
     "ALL" | "CONFIRMED" | "PENDING" | "CANCELLED"
@@ -69,7 +69,7 @@ export default function BookingsPage() {
                 value={typeFilter}
                 onChange={(e) =>
                   setTypeFilter(
-                    e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION"
+                    e.target.value as "ALL" | "PHOTOGRAPHY" | "CONSULTATION" | "DECOR"
                   )
                 }
                 className="border rounded px-3 py-1"
@@ -77,6 +77,7 @@ export default function BookingsPage() {
                 <option value="ALL">All</option>
                 <option value="PHOTOGRAPHY">📸 Photography</option>
                 <option value="CONSULTATION">💬 Consultation</option>
+                <option value="DECOR">🎨 Decor</option>
               </select>
             </div>
 
@@ -311,7 +312,7 @@ export default function BookingsPage() {
             )}
           </div>
         </div>
-      </main>
+      </main>  
     </AdminLayout>
   );
 }
