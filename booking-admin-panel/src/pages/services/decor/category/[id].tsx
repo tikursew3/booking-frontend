@@ -139,7 +139,10 @@ export default function CategoryDetailPage() {
               >
                 ➕ Add New
               </button>
-              <Link href="/services/decor-categories" className="text-blue-600 underline">
+              <Link
+                href="/services/decor-categories"
+                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition"
+              >
                 ← Back to Categories
               </Link>
             </div>
@@ -151,13 +154,17 @@ export default function CategoryDetailPage() {
                 type="text"
                 placeholder="Name"
                 value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, name: e.target.value })
+                }
                 className="w-full border px-3 py-2 rounded"
               />
               <textarea
                 placeholder="Description"
                 value={newItem.description}
-                onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, description: e.target.value })
+                }
                 className="w-full border px-3 py-2 rounded"
               />
               <input
@@ -165,7 +172,10 @@ export default function CategoryDetailPage() {
                 placeholder="Price per day"
                 value={newItem.pricePerDay}
                 onChange={(e) =>
-                  setNewItem({ ...newItem, pricePerDay: parseFloat(e.target.value) })
+                  setNewItem({
+                    ...newItem,
+                    pricePerDay: parseFloat(e.target.value),
+                  })
                 }
                 className="w-full border px-3 py-2 rounded"
               />
@@ -174,7 +184,10 @@ export default function CategoryDetailPage() {
                 placeholder="Total quantity"
                 value={newItem.totalQuantity}
                 onChange={(e) =>
-                  setNewItem({ ...newItem, totalQuantity: parseInt(e.target.value) })
+                  setNewItem({
+                    ...newItem,
+                    totalQuantity: parseInt(e.target.value),
+                  })
                 }
                 className="w-full border px-3 py-2 rounded"
               />
@@ -190,7 +203,10 @@ export default function CategoryDetailPage() {
                     const url = await uploadToCloudinary(file);
                     urls.push(url);
                   }
-                  setNewItem((prev) => ({ ...prev, imageUrls: [...prev.imageUrls, ...urls] }));
+                  setNewItem((prev) => ({
+                    ...prev,
+                    imageUrls: [...prev.imageUrls, ...urls],
+                  }));
                 }}
               />
               <button
@@ -237,7 +253,9 @@ export default function CategoryDetailPage() {
           {loading ? (
             <p>Loading decor items...</p>
           ) : items.length === 0 ? (
-            <p className="text-gray-500 italic">No decor items in this category yet.</p>
+            <p className="text-gray-500 italic">
+              No decor items in this category yet.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {items.map((item) => (
@@ -254,13 +272,23 @@ export default function CategoryDetailPage() {
                   )}
                   <div>
                     <h2 className="text-lg font-semibold">{item.name}</h2>
-                    <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
-                    <p className="text-sm">💲 {item.pricePerDay.toFixed(2)} / day</p>
-                    <p className="text-sm text-gray-600">Available: {item.totalQuantity}</p>
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {item.description}
+                    </p>
+                    <p className="text-sm">
+                      💲 {item.pricePerDay.toFixed(2)} / day
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Available: {item.totalQuantity}
+                    </p>
                     <p className="text-sm">
                       Status:{" "}
                       <span
-                        className={item.active ? "text-green-600 font-medium" : "text-red-500 font-medium"}
+                        className={
+                          item.active
+                            ? "text-green-600 font-medium"
+                            : "text-red-500 font-medium"
+                        }
                       >
                         {item.active ? "Active" : "Inactive"}
                       </span>
@@ -268,42 +296,41 @@ export default function CategoryDetailPage() {
                   </div>
 
                   <div className="flex justify-between mt-2">
-                      <button
-                        onClick={() => {
-                          setEditingItem(item);
-                          setShowAddForm(true);
-                          setNewItem({
-                            name: item.name,
-                            description: item.description,
-                            pricePerDay: item.pricePerDay,
-                            imageUrls: item.imageUrls || [],
-                            totalQuantity: item.totalQuantity,
-                            active: item.active,
-                          });
-                        }}
-                        className="text-blue-600 text-sm hover:underline"
-                      >
-                        Edit
-                      </button>
-
-                      <button
-                        onClick={() => handleDeleteItem(item.id)}
-                        className="text-red-600 text-sm hover:underline"
-                      >
-                        Delete
-                      </button>
-
-                      <button
-                        onClick={() => handleToggleActive(item.id, item.active)}
-                        className={`mt-2 px-4 py-2 rounded text-sm font-medium transition ${
-                          item.active
-                            ? "bg-red-50 text-dark-700 hover:bg-red-200"
-                            : "bg-green-50 text-green-700 hover:bg-green-200"
-                        }`}
-                      >
-                        {item.active ? "Deactivate" : "Activate"}
+                    <button
+                      onClick={() => {
+                        setEditingItem(item);
+                        setShowAddForm(true);
+                        setNewItem({
+                          name: item.name,
+                          description: item.description,
+                          pricePerDay: item.pricePerDay,
+                          imageUrls: item.imageUrls || [],
+                          totalQuantity: item.totalQuantity,
+                          active: item.active,
+                        });
+                      }}
+                      className="text-blue-600 text-sm hover:underline"
+                    >
+                      Edit
                     </button>
 
+                    <button
+                      onClick={() => handleDeleteItem(item.id)}
+                      className="text-red-600 text-sm hover:underline"
+                    >
+                      Delete
+                    </button>
+
+                    <button
+                      onClick={() => handleToggleActive(item.id, item.active)}
+                      className={`mt-2 px-4 py-2 rounded text-sm font-medium transition ${
+                        item.active
+                          ? "bg-red-50 text-dark-700 hover:bg-red-200"
+                          : "bg-green-50 text-green-700 hover:bg-green-200"
+                      }`}
+                    >
+                      {item.active ? "Deactivate" : "Activate"}
+                    </button>
                   </div>
                 </div>
               ))}
