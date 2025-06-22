@@ -20,7 +20,7 @@ export default function BookingsPage() {
       "Are you sure you want to cancel this booking?"
     );
     if (!confirmed) return;
-  
+
     try {
       await api.patch(`/api/bookings/${bookingId}/cancel`);
 
@@ -38,23 +38,23 @@ export default function BookingsPage() {
 
   useEffect(() => {
     api
-    .get<Booking[]>("/api/bookings")
-    .then((res) => {
-      const enriched = res.data.map((b) => {
-        let serviceName = "—";
-        if (b.bookingType === "PHOTOGRAPHY" && b.photographyService) {
-          serviceName = b.photographyService.name;
-        } else if (b.bookingType === "DECOR" && b.decorItem) {
-          serviceName = b.decorItem.name;
-        } else if (b.bookingType === "CONSULTATION") {
-          serviceName = "Consultation";
-        }
-        return { ...b, serviceName };
-      });
-      setBookings(enriched);
-    })
-    .catch((err) => console.error("Failed to load bookings", err));
-}, []);
+      .get<Booking[]>("/api/bookings")
+      .then((res) => {
+        const enriched = res.data.map((b) => {
+          let serviceName = "—";
+          if (b.bookingType === "PHOTOGRAPHY" && b.photographyService) {
+            serviceName = b.photographyService.name;
+          } else if (b.bookingType === "DECOR" && b.decorItem) {
+            serviceName = b.decorItem.name;
+          } else if (b.bookingType === "CONSULTATION") {
+            serviceName = "Consultation";
+          }
+          return { ...b, serviceName };
+        });
+        setBookings(enriched);
+      })
+      .catch((err) => console.error("Failed to load bookings", err));
+  }, []);
 
   return (
     <AdminLayout>
@@ -124,7 +124,6 @@ export default function BookingsPage() {
                   <th className="p-3 text-left">Type</th>
                   <th className="p-3 text-left">Status</th>
                   <th className="p-3 text-left">Start Time</th>
-                  <th className="p-3 text-left">Service</th>
                   <th className="p-3 text-left">Actions</th>
                 </tr>
               </thead>
@@ -143,7 +142,10 @@ export default function BookingsPage() {
                   )
 
                   .map((b) => (
-                    <tr key={b.id} className="border-t odd:bg-white even:bg-gray-200">
+                    <tr
+                      key={b.id}
+                      className="border-t odd:bg-white even:bg-gray-200"
+                    >
                       <td className="p-3">{b.customerName}</td>
                       <td className="p-3">{b.email}</td>
                       <td className="p-3">{b.phoneNumber}</td>
@@ -152,20 +154,20 @@ export default function BookingsPage() {
                       <td className="p-3">
                         {new Date(b.startDateTime).toLocaleString()}
                       </td>
-                      <td className="p-3">{b.serviceName || "—"}</td>
 
                       <td className="p-3 space-x-2">
                         <button
                           onClick={() => setEditingBooking(b)}
-                          className="text-blue-600 hover:underline"
+                          className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition"
                         >
                           Edit
                         </button>
+
                         {(b.status === "PENDING" ||
                           b.status === "CONFIRMED") && (
                           <button
                             onClick={() => handleCancelBooking(b.id)}
-                            className="text-red-600 hover:underline"
+                            className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
                           >
                             Cancel
                           </button>
