@@ -100,7 +100,7 @@ const AboutPage = () => {
             </span>
           </Link>
 
-          <Link href="/contact" passHref>
+          <Link href="/contact-us/contact" passHref>
             <span className="cursor-pointer bg-yellow-100 hover:bg-yellow-200 text-yellow-700 font-medium px-4 py-2 rounded-lg transition">
               Contact Us
             </span>
