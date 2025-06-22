@@ -171,9 +171,9 @@ export default function Dashboard() {
                     if (name.includes("decor")) {
                       fillColor = "#3f8021"; // light green
                     } else if (name.includes("consultation")) {
-                      fillColor = "#e61942"; // red
-                    } else if (name.includes("photography")) {
                       fillColor = "#2d7ab5"; // light blue
+                    } else if (name.includes("photography")) {
+                      fillColor = "#e61942"; // red
                     }
 
                     return <Cell key={`cell-${index}`} fill={fillColor} />;
