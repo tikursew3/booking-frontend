@@ -12,7 +12,7 @@ export default function DecorItemsByCategoryPage() {
   const categoryId = router.query.id as string;
 
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
   // New: Date range
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(() => {
@@ -45,9 +45,17 @@ export default function DecorItemsByCategoryPage() {
     }
   }, [startDate, endDate]);
 
-  const filteredItems = showOnlyAvailable
-    ? items?.filter((item) => item.availableQuantity > 0)
-    : items;
+  const filteredItems = (items || [])
+  .filter((item) =>
+    showOnlyAvailable ? item.availableQuantity > 0 : true
+  )
+  .filter((item) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <Layout headerType="alternate">
@@ -87,18 +95,27 @@ export default function DecorItemsByCategoryPage() {
           </div>
         </div>
 
-        {/* Availability Filter */}
-        <div className="mb-6 text-center">
-          <label className="inline-flex items-center space-x-2">
-            <input
-              type="checkbox"
-              checked={showOnlyAvailable}
-              onChange={() => setShowOnlyAvailable(!showOnlyAvailable)}
-              className="form-checkbox h-5 w-5 text-pink-600"
-            />
-            <span className="text-gray-700">Show Only Available</span>
-          </label>
-        </div>
+        <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+  {/* Show Only Available Checkbox */}
+  <label className="inline-flex items-center space-x-2">
+    <input
+      type="checkbox"
+      checked={showOnlyAvailable}
+      onChange={() => setShowOnlyAvailable(!showOnlyAvailable)}
+      className="form-checkbox h-5 w-5 text-pink-600"
+    />
+    <span className="text-gray-700">Show Only Available</span>
+  </label>
+
+  {/* Search Input */}
+  <input
+    type="text"
+    placeholder="Search by name"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="border rounded px-4 py-2 w-64"
+  />
+</div>
 
         {/* Results */}
         {isLoading && <p className="text-center">Loading items...</p>}

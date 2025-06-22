@@ -100,7 +100,7 @@ export default function DecorPage() {
             Schedule Consultation
           </button>
         </Link>
-        </div>
+        </div>  
 
       </section>
       <section>
