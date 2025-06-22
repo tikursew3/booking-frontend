@@ -169,11 +169,11 @@ export default function Dashboard() {
                     let fillColor = "#8884d8"; // default
 
                     if (name.includes("decor")) {
-                      fillColor = "#F59E0B"; // amber
+                      fillColor = "#3f8021"; // light green
                     } else if (name.includes("consultation")) {
-                      fillColor = "#10B981"; // green
+                      fillColor = "#e61942"; // red
                     } else if (name.includes("photography")) {
-                      fillColor = "#6366F1"; // indigo
+                      fillColor = "#2d7ab5"; // light blue
                     }
 
                     return <Cell key={`cell-${index}`} fill={fillColor} />;
