@@ -116,7 +116,7 @@ export default function DecorCheckoutPage() {
         console.error(
           "Booking error:",
           axiosError.response?.data || axiosError.message
-        );
+        );   
       } else {
         console.error("Unknown booking error:", err);
       }

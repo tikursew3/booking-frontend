@@ -29,7 +29,7 @@ export const adminLogin = async (
   console.log("Received token:", token); // this is for debugging
 
   if (token) {
-    console.log("Saving token:", token); // Add this for debugging
+    console.log("Saving token:", token); // this for debugging
     localStorage.setItem('admin_token', token);
   }
 
